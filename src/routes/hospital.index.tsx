@@ -110,6 +110,22 @@ function HospitalHome() {
 
       {tab === "dashboard" && (
         <>
+          {/* Setup prompt */}
+          {!hd.setupComplete && (
+            <GlassCard glow className="p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Database className="h-5 w-5 text-chart-2" />
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Complete Your Hospital Setup</p>
+                  <p className="text-xs text-muted-foreground">Enter your operational data to unlock AI-powered dashboards and predictions.</p>
+                </div>
+              </div>
+              <Link to="/hospital/data" className="flex items-center gap-1.5 bg-chart-2 text-primary-foreground px-4 py-2 rounded-lg text-xs font-medium hover:shadow-[0_0_20px_oklch(0.70_0.12_160/30%)] transition-all">
+                <Database className="h-3.5 w-3.5" /> Open Data Center
+              </Link>
+            </GlassCard>
+          )}
+
           {/* KPIs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
