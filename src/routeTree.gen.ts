@@ -26,6 +26,7 @@ import { Route as HospitalForgotPasswordRouteImport } from './routes/hospital.fo
 import { Route as HospitalEquipmentRouteImport } from './routes/hospital.equipment'
 import { Route as HospitalDataRouteImport } from './routes/hospital.data'
 import { Route as HospitalBedsRouteImport } from './routes/hospital.beds'
+import { Route as HospitalAutomationRouteImport } from './routes/hospital.automation'
 import { Route as HospitalAnalyticsRouteImport } from './routes/hospital.analytics'
 import { Route as HospitalAlertsRouteImport } from './routes/hospital.alerts'
 import { Route as DashboardWorkforceRouteImport } from './routes/dashboard.workforce'
@@ -134,6 +135,11 @@ const HospitalDataRoute = HospitalDataRouteImport.update({
 const HospitalBedsRoute = HospitalBedsRouteImport.update({
   id: '/beds',
   path: '/beds',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalAutomationRoute = HospitalAutomationRouteImport.update({
+  id: '/automation',
+  path: '/automation',
   getParentRoute: () => HospitalRoute,
 } as any)
 const HospitalAnalyticsRoute = HospitalAnalyticsRouteImport.update({
@@ -289,6 +295,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/workforce': typeof DashboardWorkforceRoute
   '/hospital/alerts': typeof HospitalAlertsRoute
   '/hospital/analytics': typeof HospitalAnalyticsRoute
+  '/hospital/automation': typeof HospitalAutomationRoute
   '/hospital/beds': typeof HospitalBedsRoute
   '/hospital/data': typeof HospitalDataRoute
   '/hospital/equipment': typeof HospitalEquipmentRoute
@@ -330,6 +337,7 @@ export interface FileRoutesByTo {
   '/dashboard/workforce': typeof DashboardWorkforceRoute
   '/hospital/alerts': typeof HospitalAlertsRoute
   '/hospital/analytics': typeof HospitalAnalyticsRoute
+  '/hospital/automation': typeof HospitalAutomationRoute
   '/hospital/beds': typeof HospitalBedsRoute
   '/hospital/data': typeof HospitalDataRoute
   '/hospital/equipment': typeof HospitalEquipmentRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/dashboard/workforce': typeof DashboardWorkforceRoute
   '/hospital/alerts': typeof HospitalAlertsRoute
   '/hospital/analytics': typeof HospitalAnalyticsRoute
+  '/hospital/automation': typeof HospitalAutomationRoute
   '/hospital/beds': typeof HospitalBedsRoute
   '/hospital/data': typeof HospitalDataRoute
   '/hospital/equipment': typeof HospitalEquipmentRoute
@@ -419,6 +428,7 @@ export interface FileRouteTypes {
     | '/dashboard/workforce'
     | '/hospital/alerts'
     | '/hospital/analytics'
+    | '/hospital/automation'
     | '/hospital/beds'
     | '/hospital/data'
     | '/hospital/equipment'
@@ -460,6 +470,7 @@ export interface FileRouteTypes {
     | '/dashboard/workforce'
     | '/hospital/alerts'
     | '/hospital/analytics'
+    | '/hospital/automation'
     | '/hospital/beds'
     | '/hospital/data'
     | '/hospital/equipment'
@@ -503,6 +514,7 @@ export interface FileRouteTypes {
     | '/dashboard/workforce'
     | '/hospital/alerts'
     | '/hospital/analytics'
+    | '/hospital/automation'
     | '/hospital/beds'
     | '/hospital/data'
     | '/hospital/equipment'
@@ -644,6 +656,13 @@ declare module '@tanstack/react-router' {
       path: '/beds'
       fullPath: '/hospital/beds'
       preLoaderRoute: typeof HospitalBedsRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/automation': {
+      id: '/hospital/automation'
+      path: '/automation'
+      fullPath: '/hospital/automation'
+      preLoaderRoute: typeof HospitalAutomationRouteImport
       parentRoute: typeof HospitalRoute
     }
     '/hospital/analytics': {
@@ -876,6 +895,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 interface HospitalRouteChildren {
   HospitalAlertsRoute: typeof HospitalAlertsRoute
   HospitalAnalyticsRoute: typeof HospitalAnalyticsRoute
+  HospitalAutomationRoute: typeof HospitalAutomationRoute
   HospitalBedsRoute: typeof HospitalBedsRoute
   HospitalDataRoute: typeof HospitalDataRoute
   HospitalEquipmentRoute: typeof HospitalEquipmentRoute
@@ -894,6 +914,7 @@ interface HospitalRouteChildren {
 const HospitalRouteChildren: HospitalRouteChildren = {
   HospitalAlertsRoute: HospitalAlertsRoute,
   HospitalAnalyticsRoute: HospitalAnalyticsRoute,
+  HospitalAutomationRoute: HospitalAutomationRoute,
   HospitalBedsRoute: HospitalBedsRoute,
   HospitalDataRoute: HospitalDataRoute,
   HospitalEquipmentRoute: HospitalEquipmentRoute,
