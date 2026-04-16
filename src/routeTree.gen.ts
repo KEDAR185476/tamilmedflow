@@ -9,38 +9,168 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardWorkforceRouteImport } from './routes/dashboard.workforce'
+import { Route as DashboardSimulationRouteImport } from './routes/dashboard.simulation'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardReportsRouteImport } from './routes/dashboard.reports'
+import { Route as DashboardPatientFlowRouteImport } from './routes/dashboard.patient-flow'
+import { Route as DashboardEquipmentRouteImport } from './routes/dashboard.equipment'
+import { Route as DashboardEmergencyRouteImport } from './routes/dashboard.emergency'
+import { Route as DashboardCapacityRouteImport } from './routes/dashboard.capacity'
 
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardWorkforceRoute = DashboardWorkforceRouteImport.update({
+  id: '/workforce',
+  path: '/workforce',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSimulationRoute = DashboardSimulationRouteImport.update({
+  id: '/simulation',
+  path: '/simulation',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardReportsRoute = DashboardReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardPatientFlowRoute = DashboardPatientFlowRouteImport.update({
+  id: '/patient-flow',
+  path: '/patient-flow',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEquipmentRoute = DashboardEquipmentRouteImport.update({
+  id: '/equipment',
+  path: '/equipment',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEmergencyRoute = DashboardEmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardCapacityRoute = DashboardCapacityRouteImport.update({
+  id: '/capacity',
+  path: '/capacity',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/capacity': typeof DashboardCapacityRoute
+  '/dashboard/emergency': typeof DashboardEmergencyRoute
+  '/dashboard/equipment': typeof DashboardEquipmentRoute
+  '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
+  '/dashboard/reports': typeof DashboardReportsRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/simulation': typeof DashboardSimulationRoute
+  '/dashboard/workforce': typeof DashboardWorkforceRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard/capacity': typeof DashboardCapacityRoute
+  '/dashboard/emergency': typeof DashboardEmergencyRoute
+  '/dashboard/equipment': typeof DashboardEquipmentRoute
+  '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
+  '/dashboard/reports': typeof DashboardReportsRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/simulation': typeof DashboardSimulationRoute
+  '/dashboard/workforce': typeof DashboardWorkforceRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/capacity': typeof DashboardCapacityRoute
+  '/dashboard/emergency': typeof DashboardEmergencyRoute
+  '/dashboard/equipment': typeof DashboardEquipmentRoute
+  '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
+  '/dashboard/reports': typeof DashboardReportsRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/simulation': typeof DashboardSimulationRoute
+  '/dashboard/workforce': typeof DashboardWorkforceRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/dashboard/capacity'
+    | '/dashboard/emergency'
+    | '/dashboard/equipment'
+    | '/dashboard/patient-flow'
+    | '/dashboard/reports'
+    | '/dashboard/settings'
+    | '/dashboard/simulation'
+    | '/dashboard/workforce'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard/capacity'
+    | '/dashboard/emergency'
+    | '/dashboard/equipment'
+    | '/dashboard/patient-flow'
+    | '/dashboard/reports'
+    | '/dashboard/settings'
+    | '/dashboard/simulation'
+    | '/dashboard/workforce'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/dashboard/capacity'
+    | '/dashboard/emergency'
+    | '/dashboard/equipment'
+    | '/dashboard/patient-flow'
+    | '/dashboard/reports'
+    | '/dashboard/settings'
+    | '/dashboard/simulation'
+    | '/dashboard/workforce'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +178,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/workforce': {
+      id: '/dashboard/workforce'
+      path: '/workforce'
+      fullPath: '/dashboard/workforce'
+      preLoaderRoute: typeof DashboardWorkforceRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/simulation': {
+      id: '/dashboard/simulation'
+      path: '/simulation'
+      fullPath: '/dashboard/simulation'
+      preLoaderRoute: typeof DashboardSimulationRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/reports': {
+      id: '/dashboard/reports'
+      path: '/reports'
+      fullPath: '/dashboard/reports'
+      preLoaderRoute: typeof DashboardReportsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/patient-flow': {
+      id: '/dashboard/patient-flow'
+      path: '/patient-flow'
+      fullPath: '/dashboard/patient-flow'
+      preLoaderRoute: typeof DashboardPatientFlowRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/equipment': {
+      id: '/dashboard/equipment'
+      path: '/equipment'
+      fullPath: '/dashboard/equipment'
+      preLoaderRoute: typeof DashboardEquipmentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/emergency': {
+      id: '/dashboard/emergency'
+      path: '/emergency'
+      fullPath: '/dashboard/emergency'
+      preLoaderRoute: typeof DashboardEmergencyRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/capacity': {
+      id: '/dashboard/capacity'
+      path: '/capacity'
+      fullPath: '/dashboard/capacity'
+      preLoaderRoute: typeof DashboardCapacityRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardCapacityRoute: typeof DashboardCapacityRoute
+  DashboardEmergencyRoute: typeof DashboardEmergencyRoute
+  DashboardEquipmentRoute: typeof DashboardEquipmentRoute
+  DashboardPatientFlowRoute: typeof DashboardPatientFlowRoute
+  DashboardReportsRoute: typeof DashboardReportsRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardSimulationRoute: typeof DashboardSimulationRoute
+  DashboardWorkforceRoute: typeof DashboardWorkforceRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardCapacityRoute: DashboardCapacityRoute,
+  DashboardEmergencyRoute: DashboardEmergencyRoute,
+  DashboardEquipmentRoute: DashboardEquipmentRoute,
+  DashboardPatientFlowRoute: DashboardPatientFlowRoute,
+  DashboardReportsRoute: DashboardReportsRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardSimulationRoute: DashboardSimulationRoute,
+  DashboardWorkforceRoute: DashboardWorkforceRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
