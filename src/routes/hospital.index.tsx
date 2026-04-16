@@ -53,8 +53,9 @@ function HospitalHome() {
   }
 
   const { tenant, user, onboarding } = auth;
-  const bedCount = onboarding?.totalBeds || tenant.beds || 200;
-  const occupied = Math.round(bedCount * 0.76);
+  const hd = loadHospitalData(tenant.id);
+  const bedCount = hd.capacity.totalBeds || onboarding?.totalBeds || 200;
+  const occupied = hd.liveOps.beds.occupied || Math.round(bedCount * 0.76);
 
 
 
