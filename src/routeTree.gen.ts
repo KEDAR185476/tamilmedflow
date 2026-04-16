@@ -21,7 +21,9 @@ import { Route as HospitalReportsRouteImport } from './routes/hospital.reports'
 import { Route as HospitalPatientsRouteImport } from './routes/hospital.patients'
 import { Route as HospitalOnboardingRouteImport } from './routes/hospital.onboarding'
 import { Route as HospitalLoginRouteImport } from './routes/hospital.login'
+import { Route as HospitalLearningRouteImport } from './routes/hospital.learning'
 import { Route as HospitalIcuRouteImport } from './routes/hospital.icu'
+import { Route as HospitalHistoryRouteImport } from './routes/hospital.history'
 import { Route as HospitalForgotPasswordRouteImport } from './routes/hospital.forgot-password'
 import { Route as HospitalEquipmentRouteImport } from './routes/hospital.equipment'
 import { Route as HospitalDataRouteImport } from './routes/hospital.data'
@@ -112,9 +114,19 @@ const HospitalLoginRoute = HospitalLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => HospitalRoute,
 } as any)
+const HospitalLearningRoute = HospitalLearningRouteImport.update({
+  id: '/learning',
+  path: '/learning',
+  getParentRoute: () => HospitalRoute,
+} as any)
 const HospitalIcuRoute = HospitalIcuRouteImport.update({
   id: '/icu',
   path: '/icu',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalHistoryRoute = HospitalHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
   getParentRoute: () => HospitalRoute,
 } as any)
 const HospitalForgotPasswordRoute = HospitalForgotPasswordRouteImport.update({
@@ -300,7 +312,9 @@ export interface FileRoutesByFullPath {
   '/hospital/data': typeof HospitalDataRoute
   '/hospital/equipment': typeof HospitalEquipmentRoute
   '/hospital/forgot-password': typeof HospitalForgotPasswordRoute
+  '/hospital/history': typeof HospitalHistoryRoute
   '/hospital/icu': typeof HospitalIcuRoute
+  '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
@@ -342,7 +356,9 @@ export interface FileRoutesByTo {
   '/hospital/data': typeof HospitalDataRoute
   '/hospital/equipment': typeof HospitalEquipmentRoute
   '/hospital/forgot-password': typeof HospitalForgotPasswordRoute
+  '/hospital/history': typeof HospitalHistoryRoute
   '/hospital/icu': typeof HospitalIcuRoute
+  '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
@@ -387,7 +403,9 @@ export interface FileRoutesById {
   '/hospital/data': typeof HospitalDataRoute
   '/hospital/equipment': typeof HospitalEquipmentRoute
   '/hospital/forgot-password': typeof HospitalForgotPasswordRoute
+  '/hospital/history': typeof HospitalHistoryRoute
   '/hospital/icu': typeof HospitalIcuRoute
+  '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
@@ -433,7 +451,9 @@ export interface FileRouteTypes {
     | '/hospital/data'
     | '/hospital/equipment'
     | '/hospital/forgot-password'
+    | '/hospital/history'
     | '/hospital/icu'
+    | '/hospital/learning'
     | '/hospital/login'
     | '/hospital/onboarding'
     | '/hospital/patients'
@@ -475,7 +495,9 @@ export interface FileRouteTypes {
     | '/hospital/data'
     | '/hospital/equipment'
     | '/hospital/forgot-password'
+    | '/hospital/history'
     | '/hospital/icu'
+    | '/hospital/learning'
     | '/hospital/login'
     | '/hospital/onboarding'
     | '/hospital/patients'
@@ -519,7 +541,9 @@ export interface FileRouteTypes {
     | '/hospital/data'
     | '/hospital/equipment'
     | '/hospital/forgot-password'
+    | '/hospital/history'
     | '/hospital/icu'
+    | '/hospital/learning'
     | '/hospital/login'
     | '/hospital/onboarding'
     | '/hospital/patients'
@@ -623,11 +647,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HospitalLoginRouteImport
       parentRoute: typeof HospitalRoute
     }
+    '/hospital/learning': {
+      id: '/hospital/learning'
+      path: '/learning'
+      fullPath: '/hospital/learning'
+      preLoaderRoute: typeof HospitalLearningRouteImport
+      parentRoute: typeof HospitalRoute
+    }
     '/hospital/icu': {
       id: '/hospital/icu'
       path: '/icu'
       fullPath: '/hospital/icu'
       preLoaderRoute: typeof HospitalIcuRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/history': {
+      id: '/hospital/history'
+      path: '/history'
+      fullPath: '/hospital/history'
+      preLoaderRoute: typeof HospitalHistoryRouteImport
       parentRoute: typeof HospitalRoute
     }
     '/hospital/forgot-password': {
@@ -900,7 +938,9 @@ interface HospitalRouteChildren {
   HospitalDataRoute: typeof HospitalDataRoute
   HospitalEquipmentRoute: typeof HospitalEquipmentRoute
   HospitalForgotPasswordRoute: typeof HospitalForgotPasswordRoute
+  HospitalHistoryRoute: typeof HospitalHistoryRoute
   HospitalIcuRoute: typeof HospitalIcuRoute
+  HospitalLearningRoute: typeof HospitalLearningRoute
   HospitalLoginRoute: typeof HospitalLoginRoute
   HospitalOnboardingRoute: typeof HospitalOnboardingRoute
   HospitalPatientsRoute: typeof HospitalPatientsRoute
@@ -919,7 +959,9 @@ const HospitalRouteChildren: HospitalRouteChildren = {
   HospitalDataRoute: HospitalDataRoute,
   HospitalEquipmentRoute: HospitalEquipmentRoute,
   HospitalForgotPasswordRoute: HospitalForgotPasswordRoute,
+  HospitalHistoryRoute: HospitalHistoryRoute,
   HospitalIcuRoute: HospitalIcuRoute,
+  HospitalLearningRoute: HospitalLearningRoute,
   HospitalLoginRoute: HospitalLoginRoute,
   HospitalOnboardingRoute: HospitalOnboardingRoute,
   HospitalPatientsRoute: HospitalPatientsRoute,
