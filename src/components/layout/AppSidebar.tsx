@@ -38,9 +38,9 @@ const aiItems = [
 
 const systemItems = [
   { title: "Data Transparency", url: "/dashboard/data-transparency", icon: Database },
-  { title: "Admin / Debug", url: "/dashboard/admin", icon: Terminal },
-  { title: "Reports", url: "/dashboard/reports", icon: FileBarChart },
-  { title: "Settings", url: "/dashboard/settings", icon: Settings },
+  { title: "Reports & Exports", url: "/dashboard/reports", icon: FileBarChart },
+  { title: "Settings & Governance", url: "/dashboard/settings", icon: Settings },
+  { title: "System Operations", url: "/dashboard/admin", icon: Terminal },
 ];
 
 export function AppSidebar() {
