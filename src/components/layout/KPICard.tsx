@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { GlassCard } from "./GlassCard";
 
 interface KPICardProps {
   title: string;
@@ -8,23 +7,43 @@ interface KPICardProps {
   trendUp?: boolean;
   icon: React.ReactNode;
   className?: string;
+  size?: "default" | "large";
 }
 
-export function KPICard({ title, value, trend, trendUp, icon, className }: KPICardProps) {
+export function KPICard({ title, value, trend, trendUp, icon, className, size = "default" }: KPICardProps) {
+  const isLarge = size === "large";
+
   return (
-    <GlassCard className={cn("flex items-start gap-4", className)}>
-      <div className="rounded-lg bg-primary/10 p-3 text-primary">
-        {icon}
+    <div
+      className={cn(
+        "rounded-lg border border-border bg-card/50 backdrop-blur-sm p-4 transition-all duration-200 hover:bg-card/70 hover:border-border/80",
+        isLarge && "p-5",
+        className,
+      )}
+    >
+      <div className="flex items-start justify-between mb-2">
+        <p className={cn(
+          "text-muted-foreground font-medium tracking-tight",
+          isLarge ? "text-xs" : "text-[11px]",
+        )}>
+          {title}
+        </p>
+        <div className="text-muted-foreground/60">{icon}</div>
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{title}</p>
-        <p className="text-2xl font-bold text-foreground mt-1">{value}</p>
-        {trend && (
-          <p className={cn("text-xs mt-1", trendUp ? "text-success" : "text-destructive")}>
-            {trendUp ? "↑" : "↓"} {trend}
-          </p>
-        )}
-      </div>
-    </GlassCard>
+      <p className={cn(
+        "font-semibold text-foreground tracking-tight",
+        isLarge ? "text-3xl" : "text-xl",
+      )}>
+        {value}
+      </p>
+      {trend && (
+        <p className={cn(
+          "text-[11px] mt-1.5 font-medium",
+          trendUp ? "text-success" : "text-destructive",
+        )}>
+          {trendUp ? "↑" : "↓"} {trend}
+        </p>
+      )}
+    </div>
   );
 }
