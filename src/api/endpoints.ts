@@ -11,11 +11,22 @@ export const API_ENDPOINTS = {
     staff: "/api/v1/workforce/staff",
     shifts: "/api/v1/workforce/shifts",
     fatigue: "/api/v1/workforce/fatigue",
+    burnout: "/api/v1/workforce/burnout",
+    overview: "/api/v1/workforce/overview",
   },
   equipment: {
     devices: "/api/v1/equipment/devices",
     maintenance: "/api/v1/equipment/maintenance",
     utilization: "/api/v1/equipment/utilization",
+    status: "/api/v1/equipment/status",
+  },
+  patientFlow: {
+    overview: "/api/v1/patientflow/overview",
+    discharge: "/api/v1/discharge/pending",
+    transfers: "/api/v1/patientflow/transfers",
+    intake: "/api/v1/intake/briefings",
+    efficiency: "/api/v1/efficiency/overview",
+  },
   },
   patients: {
     flow: "/api/v1/patients/flow",
