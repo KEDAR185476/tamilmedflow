@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { TrendingUp, TrendingDown, Calendar, BarChart3, Activity, Clock, AlertTriangle, ArrowUpRight, ArrowDownRight, Minus, RefreshCw } from "lucide-react";
-import { getHospitalSession } from "@/lib/hospitalAuth";
+import { getHospitalAuth } from "@/lib/hospitalAuth";
 import { loadHospitalData } from "@/lib/hospitalDataEngine";
 import { computeEfficiencyScore } from "@/lib/hospitalAIEngine";
 import { loadHistory, seedDemoHistory, getTrend, computeBenchmarks, type DailySnapshot } from "@/lib/hospitalHistoryEngine";
@@ -15,8 +15,8 @@ import { loadHistory, seedDemoHistory, getTrend, computeBenchmarks, type DailySn
 export const Route = createFileRoute("/hospital/history")({ component: HistoryPage });
 
 function HistoryPage() {
-  const session = getHospitalSession();
-  const tenantId = session?.tenantId || "demo";
+  const session = getHospitalAuth();
+  const tenantId = session?.tenant?.id || "demo";
   const state = loadHospitalData(tenantId);
   const eff = computeEfficiencyScore(state);
 

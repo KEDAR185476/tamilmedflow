@@ -11,7 +11,7 @@ import {
   BookOpen, BarChart3, RefreshCw, CheckCircle, Target, Lightbulb,
   GitBranch, ArrowRight,
 } from "lucide-react";
-import { getHospitalSession } from "@/lib/hospitalAuth";
+import { getHospitalAuth } from "@/lib/hospitalAuth";
 import { loadHospitalData } from "@/lib/hospitalDataEngine";
 import { computeEfficiencyScore } from "@/lib/hospitalAIEngine";
 import { loadHistory, seedDemoHistory, computeBenchmarks } from "@/lib/hospitalHistoryEngine";
@@ -23,8 +23,8 @@ import {
 export const Route = createFileRoute("/hospital/learning")({ component: LearningPage });
 
 function LearningPage() {
-  const session = getHospitalSession();
-  const tenantId = session?.tenantId || "demo";
+  const session = getHospitalAuth();
+  const tenantId = session?.tenant?.id || "demo";
   const state = loadHospitalData(tenantId);
 
   const [snapshots, setSnapshots] = useState(() => {
