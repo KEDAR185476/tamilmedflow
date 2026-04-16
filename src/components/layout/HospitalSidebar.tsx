@@ -2,7 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import {
   LayoutDashboard, BedDouble, Users, Wrench, Activity,
   Stethoscope, HeartPulse, BarChart3, Settings, Hospital,
-  FileBarChart, AlertTriangle, Database, Zap, History, Brain, Boxes, Sparkles, Award,
+  FileBarChart, AlertTriangle, Database, Zap, History, Brain, Boxes, Sparkles, Award, Shield,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -19,6 +19,7 @@ const hospitalNav = [
   { title: "Equipment", url: "/hospital/equipment", icon: Wrench },
   { title: "Resource Optimizer", url: "/hospital/resources", icon: Boxes },
   { title: "Patient Flow", url: "/hospital/patients", icon: Stethoscope },
+  { title: "Insurance Intelligence", url: "/hospital/insurance", icon: Shield },
   { title: "ICU Monitor", url: "/hospital/icu", icon: HeartPulse },
   { title: "Alerts", url: "/hospital/alerts", icon: AlertTriangle },
   { title: "Automation", url: "/hospital/automation", icon: Zap },
