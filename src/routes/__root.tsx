@@ -34,6 +34,10 @@ export const Route = createRootRoute({
       { name: "author", content: "MedFlow Nexus" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:title", content: "MedFlow Nexus" },
+      { name: "twitter:title", content: "MedFlow Nexus" },
+      { property: "og:description", content: "AI-Powered Central Nervous System for Tamil Nadu Hospitals" },
+      { name: "twitter:description", content: "AI-Powered Central Nervous System for Tamil Nadu Hospitals" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
