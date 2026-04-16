@@ -43,8 +43,8 @@ function InsurancePage() {
   const [result, setResult] = useState<InsuranceResult | null>(null);
   const [running, setRunning] = useState(false);
 
-  const valid = useMemo(() =>
-    profile.name.trim().length > 1 && typeof profile.age === "number" && profile.age > 0 && profile.gender && profile.state,
+  const valid = useMemo<boolean>(() =>
+    profile.name.trim().length > 1 && typeof profile.age === "number" && profile.age > 0 && Boolean(profile.gender) && Boolean(profile.state),
     [profile]
   );
 
