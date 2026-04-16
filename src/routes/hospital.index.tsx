@@ -113,10 +113,10 @@ function HospitalHome() {
           {/* KPIs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: BedDouble, label: "Total Beds", value: bedCount.toString(), sub: `${occupied} occupied` },
+              { icon: BedDouble, label: "Total Beds", value: bedCount.toString(), sub: `${occupied} occupied · ${hd.liveOps.beds.vacant} vacant` },
               { icon: Activity, label: "Occupancy", value: `${Math.round((occupied / bedCount) * 100)}%`, sub: "Target: < 85%" },
-              { icon: Users, label: "Staff On Duty", value: (onboarding?.doctors || 30).toString(), sub: `${onboarding?.nurses || 80} nurses` },
-              { icon: Wrench, label: "Equipment Ready", value: "94%", sub: `${onboarding?.ventilators || 15} ventilators` },
+              { icon: Users, label: "Staff On Duty", value: `${hd.liveOps.staff.onDutyDoctors} doctors`, sub: `${hd.liveOps.staff.onDutyNurses} nurses on duty` },
+              { icon: Wrench, label: "Equipment Ready", value: `${Math.round(((hd.equipment.ventilators - hd.liveOps.equipment.maintenancePending) / Math.max(1, hd.equipment.ventilators)) * 100)}%`, sub: `${hd.equipment.ventilators} ventilators` },
             ].map(k => (
               <GlassCard key={k.label} className="p-4">
                 <div className="flex items-center gap-2 mb-2">
@@ -160,10 +160,10 @@ function HospitalHome() {
               </h3>
               <div className="space-y-2 text-xs">
                 {[
-                  { role: "Doctors", count: onboarding?.doctors || 30, status: "Available" },
-                  { role: "Nurses", count: onboarding?.nurses || 80, status: "On Duty" },
-                  { role: "Specialists", count: onboarding?.specialists || 12, status: "Available" },
-                  { role: "Technicians", count: Math.round((onboarding?.doctors || 30) * 0.5), status: "On Call" },
+                  { role: "Doctors", count: hd.staff.doctors, status: `${hd.liveOps.staff.onDutyDoctors} on duty` },
+                  { role: "Nurses", count: hd.staff.nurses, status: `${hd.liveOps.staff.onDutyNurses} on duty` },
+                  { role: "Specialists", count: hd.staff.specialists, status: "Available" },
+                  { role: "Support", count: hd.staff.supportStaff, status: "Active" },
                 ].map(s => (
                   <div key={s.role} className="flex items-center justify-between">
                     <span className="text-muted-foreground">{s.role}</span>
