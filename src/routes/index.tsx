@@ -100,6 +100,8 @@ function LandingPage() {
               <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
               <Link to="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
               <Link to="/security" className="hover:text-foreground transition-colors">Security</Link>
+              <Link to="/architecture" className="hover:text-foreground transition-colors">Architecture</Link>
+              <Link to="/api-docs" className="hover:text-foreground transition-colors">API Docs</Link>
               <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
             </div>
             <div className="flex items-center gap-3">
@@ -377,12 +379,18 @@ function LandingPage() {
                 <Hospital className="h-5 w-5 text-chart-2" /> My Hospital
               </Link>
             </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
+              <Link to="/judge-mode"
+                className="inline-flex items-center gap-2 glass rounded-xl px-6 py-3 font-semibold text-sm text-primary hover:neon-border transition-all">
+                <Play className="h-4 w-4" /> Judge Demo Mode
+              </Link>
+            </div>
             <button
               onClick={handleActivate}
               disabled={activating}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-primary via-chart-2 to-chart-5 text-white px-10 py-4 rounded-2xl font-black text-lg hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_oklch(0.75_0.15_190/30%)]"
             >
-              <Rocket className="h-5 w-5" /> ACTIVATE MEDFLOW NEXUS
+              <Rocket className="h-5 w-5" /> DEPLOY MEDFLOW NEXUS
             </button>
           </section>
 
@@ -406,12 +414,14 @@ function LandingPage() {
                     <span className="block text-xs text-muted-foreground">Careers (Coming Soon)</span>
                   </div>
                 </div>
-                <div>
+                  <div>
                   <h4 className="text-xs font-semibold text-foreground mb-3">Trust</h4>
                   <div className="space-y-1.5">
                     <Link to="/security" className="block text-xs text-muted-foreground hover:text-foreground">Security</Link>
-                    <span className="block text-xs text-muted-foreground">API Docs (Coming Soon)</span>
-                    <span className="block text-xs text-muted-foreground">Documentation</span>
+                    <Link to="/api-docs" className="block text-xs text-muted-foreground hover:text-foreground">API Docs</Link>
+                    <Link to="/architecture" className="block text-xs text-muted-foreground hover:text-foreground">Architecture</Link>
+                    <Link to="/devops" className="block text-xs text-muted-foreground hover:text-foreground">DevOps</Link>
+                    <Link to="/business" className="block text-xs text-muted-foreground hover:text-foreground">Business</Link>
                   </div>
                 </div>
                 <div>
