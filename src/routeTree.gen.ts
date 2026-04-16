@@ -27,6 +27,7 @@ import { Route as HospitalTwinRouteImport } from './routes/hospital.twin'
 import { Route as HospitalStaffRouteImport } from './routes/hospital.staff'
 import { Route as HospitalSignupRouteImport } from './routes/hospital.signup'
 import { Route as HospitalSettingsRouteImport } from './routes/hospital.settings'
+import { Route as HospitalRoiRouteImport } from './routes/hospital.roi'
 import { Route as HospitalResourcesRouteImport } from './routes/hospital.resources'
 import { Route as HospitalReportsRouteImport } from './routes/hospital.reports'
 import { Route as HospitalPatientsRouteImport } from './routes/hospital.patients'
@@ -153,6 +154,11 @@ const HospitalSignupRoute = HospitalSignupRouteImport.update({
 const HospitalSettingsRoute = HospitalSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalRoiRoute = HospitalRoiRouteImport.update({
+  id: '/roi',
+  path: '/roi',
   getParentRoute: () => HospitalRoute,
 } as any)
 const HospitalResourcesRoute = HospitalResourcesRouteImport.update({
@@ -395,6 +401,7 @@ export interface FileRoutesByFullPath {
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
   '/hospital/resources': typeof HospitalResourcesRoute
+  '/hospital/roi': typeof HospitalRoiRoute
   '/hospital/settings': typeof HospitalSettingsRoute
   '/hospital/signup': typeof HospitalSignupRoute
   '/hospital/staff': typeof HospitalStaffRoute
@@ -450,6 +457,7 @@ export interface FileRoutesByTo {
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
   '/hospital/resources': typeof HospitalResourcesRoute
+  '/hospital/roi': typeof HospitalRoiRoute
   '/hospital/settings': typeof HospitalSettingsRoute
   '/hospital/signup': typeof HospitalSignupRoute
   '/hospital/staff': typeof HospitalStaffRoute
@@ -508,6 +516,7 @@ export interface FileRoutesById {
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
   '/hospital/resources': typeof HospitalResourcesRoute
+  '/hospital/roi': typeof HospitalRoiRoute
   '/hospital/settings': typeof HospitalSettingsRoute
   '/hospital/signup': typeof HospitalSignupRoute
   '/hospital/staff': typeof HospitalStaffRoute
@@ -567,6 +576,7 @@ export interface FileRouteTypes {
     | '/hospital/patients'
     | '/hospital/reports'
     | '/hospital/resources'
+    | '/hospital/roi'
     | '/hospital/settings'
     | '/hospital/signup'
     | '/hospital/staff'
@@ -622,6 +632,7 @@ export interface FileRouteTypes {
     | '/hospital/patients'
     | '/hospital/reports'
     | '/hospital/resources'
+    | '/hospital/roi'
     | '/hospital/settings'
     | '/hospital/signup'
     | '/hospital/staff'
@@ -679,6 +690,7 @@ export interface FileRouteTypes {
     | '/hospital/patients'
     | '/hospital/reports'
     | '/hospital/resources'
+    | '/hospital/roi'
     | '/hospital/settings'
     | '/hospital/signup'
     | '/hospital/staff'
@@ -828,6 +840,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/hospital/settings'
       preLoaderRoute: typeof HospitalSettingsRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/roi': {
+      id: '/hospital/roi'
+      path: '/roi'
+      fullPath: '/hospital/roi'
+      preLoaderRoute: typeof HospitalRoiRouteImport
       parentRoute: typeof HospitalRoute
     }
     '/hospital/resources': {
@@ -1164,6 +1183,7 @@ interface HospitalRouteChildren {
   HospitalPatientsRoute: typeof HospitalPatientsRoute
   HospitalReportsRoute: typeof HospitalReportsRoute
   HospitalResourcesRoute: typeof HospitalResourcesRoute
+  HospitalRoiRoute: typeof HospitalRoiRoute
   HospitalSettingsRoute: typeof HospitalSettingsRoute
   HospitalSignupRoute: typeof HospitalSignupRoute
   HospitalStaffRoute: typeof HospitalStaffRoute
@@ -1187,6 +1207,7 @@ const HospitalRouteChildren: HospitalRouteChildren = {
   HospitalPatientsRoute: HospitalPatientsRoute,
   HospitalReportsRoute: HospitalReportsRoute,
   HospitalResourcesRoute: HospitalResourcesRoute,
+  HospitalRoiRoute: HospitalRoiRoute,
   HospitalSettingsRoute: HospitalSettingsRoute,
   HospitalSignupRoute: HospitalSignupRoute,
   HospitalStaffRoute: HospitalStaffRoute,
