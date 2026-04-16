@@ -1,15 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { GlassCard } from "@/components/layout/GlassCard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Hospital, BedDouble, Users, Wrench, Activity, CheckCircle,
   Building2, MapPin, Phone, Mail, HeartPulse, Clock, Shield,
-  UserPlus, Trash2, Edit2, Eye, Lock,
+  UserPlus, Trash2, Edit2, Lock, Database,
 } from "lucide-react";
 import {
   getHospitalAuth, ROLE_LABELS, type HospitalRole, ROLE_PERMISSIONS,
-  type HospitalUser, clearHospitalAuth,
+  clearHospitalAuth,
 } from "@/lib/hospitalAuth";
+import { loadHospitalData } from "@/lib/hospitalDataEngine";
 
 export const Route = createFileRoute("/hospital/")({
   component: HospitalHome,
@@ -52,8 +53,9 @@ function HospitalHome() {
   }
 
   const { tenant, user, onboarding } = auth;
-  const bedCount = onboarding?.totalBeds || tenant.beds || 200;
-  const occupied = Math.round(bedCount * 0.76);
+  const hd = loadHospitalData(tenant.id);
+  const bedCount = hd.capacity.totalBeds || onboarding?.totalBeds || 200;
+  const occupied = hd.liveOps.beds.occupied || Math.round(bedCount * 0.76);
 
 
 
@@ -108,13 +110,29 @@ function HospitalHome() {
 
       {tab === "dashboard" && (
         <>
+          {/* Setup prompt */}
+          {!hd.setupComplete && (
+            <GlassCard glow className="p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Database className="h-5 w-5 text-chart-2" />
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Complete Your Hospital Setup</p>
+                  <p className="text-xs text-muted-foreground">Enter your operational data to unlock AI-powered dashboards and predictions.</p>
+                </div>
+              </div>
+              <Link to="/hospital/data" className="flex items-center gap-1.5 bg-chart-2 text-primary-foreground px-4 py-2 rounded-lg text-xs font-medium hover:shadow-[0_0_20px_oklch(0.70_0.12_160/30%)] transition-all">
+                <Database className="h-3.5 w-3.5" /> Open Data Center
+              </Link>
+            </GlassCard>
+          )}
+
           {/* KPIs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: BedDouble, label: "Total Beds", value: bedCount.toString(), sub: `${occupied} occupied` },
+              { icon: BedDouble, label: "Total Beds", value: bedCount.toString(), sub: `${occupied} occupied · ${hd.liveOps.beds.vacant} vacant` },
               { icon: Activity, label: "Occupancy", value: `${Math.round((occupied / bedCount) * 100)}%`, sub: "Target: < 85%" },
-              { icon: Users, label: "Staff On Duty", value: (onboarding?.doctors || 30).toString(), sub: `${onboarding?.nurses || 80} nurses` },
-              { icon: Wrench, label: "Equipment Ready", value: "94%", sub: `${onboarding?.ventilators || 15} ventilators` },
+              { icon: Users, label: "Staff On Duty", value: `${hd.liveOps.staff.onDutyDoctors} doctors`, sub: `${hd.liveOps.staff.onDutyNurses} nurses on duty` },
+              { icon: Wrench, label: "Equipment Ready", value: `${Math.round(((hd.equipment.ventilators - hd.liveOps.equipment.maintenancePending) / Math.max(1, hd.equipment.ventilators)) * 100)}%`, sub: `${hd.equipment.ventilators} ventilators` },
             ].map(k => (
               <GlassCard key={k.label} className="p-4">
                 <div className="flex items-center gap-2 mb-2">
@@ -158,10 +176,10 @@ function HospitalHome() {
               </h3>
               <div className="space-y-2 text-xs">
                 {[
-                  { role: "Doctors", count: onboarding?.doctors || 30, status: "Available" },
-                  { role: "Nurses", count: onboarding?.nurses || 80, status: "On Duty" },
-                  { role: "Specialists", count: onboarding?.specialists || 12, status: "Available" },
-                  { role: "Technicians", count: Math.round((onboarding?.doctors || 30) * 0.5), status: "On Call" },
+                  { role: "Doctors", count: hd.staff.doctors, status: `${hd.liveOps.staff.onDutyDoctors} on duty` },
+                  { role: "Nurses", count: hd.staff.nurses, status: `${hd.liveOps.staff.onDutyNurses} on duty` },
+                  { role: "Specialists", count: hd.staff.specialists, status: "Available" },
+                  { role: "Support", count: hd.staff.supportStaff, status: "Active" },
                 ].map(s => (
                   <div key={s.role} className="flex items-center justify-between">
                     <span className="text-muted-foreground">{s.role}</span>
