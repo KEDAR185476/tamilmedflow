@@ -23,6 +23,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HospitalIndexRouteImport } from './routes/hospital.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as HospitalTwinRouteImport } from './routes/hospital.twin'
 import { Route as HospitalStaffRouteImport } from './routes/hospital.staff'
 import { Route as HospitalSignupRouteImport } from './routes/hospital.signup'
 import { Route as HospitalSettingsRouteImport } from './routes/hospital.settings'
@@ -133,6 +134,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const HospitalTwinRoute = HospitalTwinRouteImport.update({
+  id: '/twin',
+  path: '/twin',
+  getParentRoute: () => HospitalRoute,
 } as any)
 const HospitalStaffRoute = HospitalStaffRouteImport.update({
   id: '/staff',
@@ -392,6 +398,7 @@ export interface FileRoutesByFullPath {
   '/hospital/settings': typeof HospitalSettingsRoute
   '/hospital/signup': typeof HospitalSignupRoute
   '/hospital/staff': typeof HospitalStaffRoute
+  '/hospital/twin': typeof HospitalTwinRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/hospital/': typeof HospitalIndexRoute
 }
@@ -446,6 +453,7 @@ export interface FileRoutesByTo {
   '/hospital/settings': typeof HospitalSettingsRoute
   '/hospital/signup': typeof HospitalSignupRoute
   '/hospital/staff': typeof HospitalStaffRoute
+  '/hospital/twin': typeof HospitalTwinRoute
   '/dashboard': typeof DashboardIndexRoute
   '/hospital': typeof HospitalIndexRoute
 }
@@ -503,6 +511,7 @@ export interface FileRoutesById {
   '/hospital/settings': typeof HospitalSettingsRoute
   '/hospital/signup': typeof HospitalSignupRoute
   '/hospital/staff': typeof HospitalStaffRoute
+  '/hospital/twin': typeof HospitalTwinRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/hospital/': typeof HospitalIndexRoute
 }
@@ -561,6 +570,7 @@ export interface FileRouteTypes {
     | '/hospital/settings'
     | '/hospital/signup'
     | '/hospital/staff'
+    | '/hospital/twin'
     | '/dashboard/'
     | '/hospital/'
   fileRoutesByTo: FileRoutesByTo
@@ -615,6 +625,7 @@ export interface FileRouteTypes {
     | '/hospital/settings'
     | '/hospital/signup'
     | '/hospital/staff'
+    | '/hospital/twin'
     | '/dashboard'
     | '/hospital'
   id:
@@ -671,6 +682,7 @@ export interface FileRouteTypes {
     | '/hospital/settings'
     | '/hospital/signup'
     | '/hospital/staff'
+    | '/hospital/twin'
     | '/dashboard/'
     | '/hospital/'
   fileRoutesById: FileRoutesById
@@ -789,6 +801,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/hospital/twin': {
+      id: '/hospital/twin'
+      path: '/twin'
+      fullPath: '/hospital/twin'
+      preLoaderRoute: typeof HospitalTwinRouteImport
+      parentRoute: typeof HospitalRoute
     }
     '/hospital/staff': {
       id: '/hospital/staff'
@@ -1148,6 +1167,7 @@ interface HospitalRouteChildren {
   HospitalSettingsRoute: typeof HospitalSettingsRoute
   HospitalSignupRoute: typeof HospitalSignupRoute
   HospitalStaffRoute: typeof HospitalStaffRoute
+  HospitalTwinRoute: typeof HospitalTwinRoute
   HospitalIndexRoute: typeof HospitalIndexRoute
 }
 
@@ -1170,6 +1190,7 @@ const HospitalRouteChildren: HospitalRouteChildren = {
   HospitalSettingsRoute: HospitalSettingsRoute,
   HospitalSignupRoute: HospitalSignupRoute,
   HospitalStaffRoute: HospitalStaffRoute,
+  HospitalTwinRoute: HospitalTwinRoute,
   HospitalIndexRoute: HospitalIndexRoute,
 }
 
