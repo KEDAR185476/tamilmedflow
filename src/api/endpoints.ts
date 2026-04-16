@@ -36,10 +36,17 @@ export const API_ENDPOINTS = {
     alerts: "/api/v1/emergency/alerts",
     dispatch: "/api/v1/emergency/dispatch",
     surge: "/api/v1/emergency/surge",
+    status: "/api/v1/emergency/status",
   },
   simulation: {
     run: "/api/v1/simulation/run",
     scenarios: "/api/v1/simulation/scenarios",
+  },
+  // Part 6: Crisis Intelligence
+  crisis: {
+    twin: "/api/v1/twin/state",
+    readiness: "/api/v1/crisis/readiness",
+    impact: "/api/v1/impact/analyze",
   },
   // Part 4: Capacity Operations
   capacityOps: {
