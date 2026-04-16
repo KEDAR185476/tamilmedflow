@@ -1,15 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { GlassCard } from "@/components/layout/GlassCard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Hospital, BedDouble, Users, Wrench, Activity, CheckCircle,
   Building2, MapPin, Phone, Mail, HeartPulse, Clock, Shield,
-  UserPlus, Trash2, Edit2, Eye, Lock,
+  UserPlus, Trash2, Edit2, Lock, Database,
 } from "lucide-react";
 import {
   getHospitalAuth, ROLE_LABELS, type HospitalRole, ROLE_PERMISSIONS,
-  type HospitalUser, clearHospitalAuth,
+  clearHospitalAuth,
 } from "@/lib/hospitalAuth";
+import { loadHospitalData } from "@/lib/hospitalDataEngine";
 
 export const Route = createFileRoute("/hospital/")({
   component: HospitalHome,
