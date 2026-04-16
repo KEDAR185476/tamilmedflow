@@ -16,11 +16,15 @@ import { Route as DashboardWorkforceRouteImport } from './routes/dashboard.workf
 import { Route as DashboardSimulationRouteImport } from './routes/dashboard.simulation'
 import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
 import { Route as DashboardReportsRouteImport } from './routes/dashboard.reports'
+import { Route as DashboardRecommendationsRouteImport } from './routes/dashboard.recommendations'
 import { Route as DashboardPatientFlowRouteImport } from './routes/dashboard.patient-flow'
+import { Route as DashboardForecastRouteImport } from './routes/dashboard.forecast'
 import { Route as DashboardEquipmentRouteImport } from './routes/dashboard.equipment'
 import { Route as DashboardEmergencyRouteImport } from './routes/dashboard.emergency'
+import { Route as DashboardDistrictPredictionsRouteImport } from './routes/dashboard.district-predictions'
 import { Route as DashboardDataTransparencyRouteImport } from './routes/dashboard.data-transparency'
 import { Route as DashboardCapacityRouteImport } from './routes/dashboard.capacity'
+import { Route as DashboardAiTransparencyRouteImport } from './routes/dashboard.ai-transparency'
 import { Route as DashboardAdminRouteImport } from './routes/dashboard.admin'
 
 const DashboardRoute = DashboardRouteImport.update({
@@ -58,9 +62,20 @@ const DashboardReportsRoute = DashboardReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardRecommendationsRoute =
+  DashboardRecommendationsRouteImport.update({
+    id: '/recommendations',
+    path: '/recommendations',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardPatientFlowRoute = DashboardPatientFlowRouteImport.update({
   id: '/patient-flow',
   path: '/patient-flow',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardForecastRoute = DashboardForecastRouteImport.update({
+  id: '/forecast',
+  path: '/forecast',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardEquipmentRoute = DashboardEquipmentRouteImport.update({
@@ -73,6 +88,12 @@ const DashboardEmergencyRoute = DashboardEmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardDistrictPredictionsRoute =
+  DashboardDistrictPredictionsRouteImport.update({
+    id: '/district-predictions',
+    path: '/district-predictions',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardDataTransparencyRoute =
   DashboardDataTransparencyRouteImport.update({
     id: '/data-transparency',
@@ -82,6 +103,11 @@ const DashboardDataTransparencyRoute =
 const DashboardCapacityRoute = DashboardCapacityRouteImport.update({
   id: '/capacity',
   path: '/capacity',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAiTransparencyRoute = DashboardAiTransparencyRouteImport.update({
+  id: '/ai-transparency',
+  path: '/ai-transparency',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardAdminRoute = DashboardAdminRouteImport.update({
@@ -94,11 +120,15 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/admin': typeof DashboardAdminRoute
+  '/dashboard/ai-transparency': typeof DashboardAiTransparencyRoute
   '/dashboard/capacity': typeof DashboardCapacityRoute
   '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
+  '/dashboard/district-predictions': typeof DashboardDistrictPredictionsRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
+  '/dashboard/forecast': typeof DashboardForecastRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
+  '/dashboard/recommendations': typeof DashboardRecommendationsRoute
   '/dashboard/reports': typeof DashboardReportsRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/simulation': typeof DashboardSimulationRoute
@@ -108,11 +138,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard/admin': typeof DashboardAdminRoute
+  '/dashboard/ai-transparency': typeof DashboardAiTransparencyRoute
   '/dashboard/capacity': typeof DashboardCapacityRoute
   '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
+  '/dashboard/district-predictions': typeof DashboardDistrictPredictionsRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
+  '/dashboard/forecast': typeof DashboardForecastRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
+  '/dashboard/recommendations': typeof DashboardRecommendationsRoute
   '/dashboard/reports': typeof DashboardReportsRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/simulation': typeof DashboardSimulationRoute
@@ -124,11 +158,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/admin': typeof DashboardAdminRoute
+  '/dashboard/ai-transparency': typeof DashboardAiTransparencyRoute
   '/dashboard/capacity': typeof DashboardCapacityRoute
   '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
+  '/dashboard/district-predictions': typeof DashboardDistrictPredictionsRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
+  '/dashboard/forecast': typeof DashboardForecastRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
+  '/dashboard/recommendations': typeof DashboardRecommendationsRoute
   '/dashboard/reports': typeof DashboardReportsRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/simulation': typeof DashboardSimulationRoute
@@ -141,11 +179,15 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/dashboard/admin'
+    | '/dashboard/ai-transparency'
     | '/dashboard/capacity'
     | '/dashboard/data-transparency'
+    | '/dashboard/district-predictions'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
+    | '/dashboard/forecast'
     | '/dashboard/patient-flow'
+    | '/dashboard/recommendations'
     | '/dashboard/reports'
     | '/dashboard/settings'
     | '/dashboard/simulation'
@@ -155,11 +197,15 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dashboard/admin'
+    | '/dashboard/ai-transparency'
     | '/dashboard/capacity'
     | '/dashboard/data-transparency'
+    | '/dashboard/district-predictions'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
+    | '/dashboard/forecast'
     | '/dashboard/patient-flow'
+    | '/dashboard/recommendations'
     | '/dashboard/reports'
     | '/dashboard/settings'
     | '/dashboard/simulation'
@@ -170,11 +216,15 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/dashboard/admin'
+    | '/dashboard/ai-transparency'
     | '/dashboard/capacity'
     | '/dashboard/data-transparency'
+    | '/dashboard/district-predictions'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
+    | '/dashboard/forecast'
     | '/dashboard/patient-flow'
+    | '/dashboard/recommendations'
     | '/dashboard/reports'
     | '/dashboard/settings'
     | '/dashboard/simulation'
@@ -238,11 +288,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardReportsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/recommendations': {
+      id: '/dashboard/recommendations'
+      path: '/recommendations'
+      fullPath: '/dashboard/recommendations'
+      preLoaderRoute: typeof DashboardRecommendationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/patient-flow': {
       id: '/dashboard/patient-flow'
       path: '/patient-flow'
       fullPath: '/dashboard/patient-flow'
       preLoaderRoute: typeof DashboardPatientFlowRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/forecast': {
+      id: '/dashboard/forecast'
+      path: '/forecast'
+      fullPath: '/dashboard/forecast'
+      preLoaderRoute: typeof DashboardForecastRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/equipment': {
@@ -259,6 +323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardEmergencyRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/district-predictions': {
+      id: '/dashboard/district-predictions'
+      path: '/district-predictions'
+      fullPath: '/dashboard/district-predictions'
+      preLoaderRoute: typeof DashboardDistrictPredictionsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/data-transparency': {
       id: '/dashboard/data-transparency'
       path: '/data-transparency'
@@ -273,6 +344,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardCapacityRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/ai-transparency': {
+      id: '/dashboard/ai-transparency'
+      path: '/ai-transparency'
+      fullPath: '/dashboard/ai-transparency'
+      preLoaderRoute: typeof DashboardAiTransparencyRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/admin': {
       id: '/dashboard/admin'
       path: '/admin'
@@ -285,11 +363,15 @@ declare module '@tanstack/react-router' {
 
 interface DashboardRouteChildren {
   DashboardAdminRoute: typeof DashboardAdminRoute
+  DashboardAiTransparencyRoute: typeof DashboardAiTransparencyRoute
   DashboardCapacityRoute: typeof DashboardCapacityRoute
   DashboardDataTransparencyRoute: typeof DashboardDataTransparencyRoute
+  DashboardDistrictPredictionsRoute: typeof DashboardDistrictPredictionsRoute
   DashboardEmergencyRoute: typeof DashboardEmergencyRoute
   DashboardEquipmentRoute: typeof DashboardEquipmentRoute
+  DashboardForecastRoute: typeof DashboardForecastRoute
   DashboardPatientFlowRoute: typeof DashboardPatientFlowRoute
+  DashboardRecommendationsRoute: typeof DashboardRecommendationsRoute
   DashboardReportsRoute: typeof DashboardReportsRoute
   DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardSimulationRoute: typeof DashboardSimulationRoute
@@ -299,11 +381,15 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAdminRoute: DashboardAdminRoute,
+  DashboardAiTransparencyRoute: DashboardAiTransparencyRoute,
   DashboardCapacityRoute: DashboardCapacityRoute,
   DashboardDataTransparencyRoute: DashboardDataTransparencyRoute,
+  DashboardDistrictPredictionsRoute: DashboardDistrictPredictionsRoute,
   DashboardEmergencyRoute: DashboardEmergencyRoute,
   DashboardEquipmentRoute: DashboardEquipmentRoute,
+  DashboardForecastRoute: DashboardForecastRoute,
   DashboardPatientFlowRoute: DashboardPatientFlowRoute,
+  DashboardRecommendationsRoute: DashboardRecommendationsRoute,
   DashboardReportsRoute: DashboardReportsRoute,
   DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardSimulationRoute: DashboardSimulationRoute,

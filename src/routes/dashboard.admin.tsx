@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { useDistrictFilter } from "@/hooks/useDistrictFilter";
 import { DATA_SOURCES } from "@/data/source-registry";
-import { Terminal, Database, Clock, MapPin, Activity, CheckCircle } from "lucide-react";
+import { AI_MODELS, getActiveModels } from "@/data/ai-models";
+import { Terminal, Database, Clock, MapPin, Activity, CheckCircle, Brain, Cpu } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/admin")({
   component: AdminPage,
@@ -55,6 +56,9 @@ function AdminPage() {
             <ServiceStatus name="Data Service" status="ok" />
             <ServiceStatus name="Simulation Engine" status="ok" />
             <ServiceStatus name="District Filter" status="ok" />
+            <ServiceStatus name="Forecast Engine" status="ok" />
+            <ServiceStatus name="Recommendation Engine" status="ok" />
+            <ServiceStatus name="AI Model Registry" status="ok" detail={`${getActiveModels().length} active`} />
             <ServiceStatus name="FastAPI Backend" status="pending" detail="Not connected" />
             <ServiceStatus name="WebSocket" status="pending" detail="Not connected" />
           </div>
@@ -78,6 +82,33 @@ function AdminPage() {
               </div>
               <p className="text-[10px] text-muted-foreground">Updated: {src.lastUpdated}</p>
               <p className="text-[10px] text-muted-foreground">Reliability: {"★".repeat(src.reliabilityScore)}{"☆".repeat(5 - src.reliabilityScore)}</p>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+
+      {/* AI Model Status */}
+      <GlassCard className="p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Brain className="h-4 w-4 text-primary" />
+          <h3 className="text-sm font-semibold text-foreground">AI Model Status</h3>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {AI_MODELS.map(m => (
+            <div key={m.id} className="glass rounded-lg p-3">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-medium text-foreground">{m.name.slice(0, 28)}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded ${m.status === "active" ? "bg-success/20 text-success" : m.status === "experimental" ? "bg-warning/20 text-warning" : "bg-muted text-muted-foreground"}`}>
+                  {m.status}
+                </span>
+              </div>
+              <p className="text-[10px] text-muted-foreground">{m.modelType} v{m.version}</p>
+              <div className="flex items-center gap-2 mt-1 text-[10px] text-muted-foreground">
+                <Cpu className="h-3 w-3" />
+                <span>Accuracy: {m.accuracyEstimate > 0 ? `${m.accuracyEstimate}%` : "N/A"}</span>
+                <span>|</span>
+                <span>Inference: {m.status === "active" ? "<50ms" : "N/A"}</span>
+              </div>
             </div>
           ))}
         </div>
