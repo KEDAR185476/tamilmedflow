@@ -33,23 +33,22 @@ export function HospitalSidebar() {
   const location = useLocation();
 
   return (
-    <Sidebar collapsible="icon" className="border-r-0">
-      <SidebarHeader className="p-4">
+    <Sidebar collapsible="icon" className="border-r border-border/50 bg-sidebar">
+      <SidebarHeader className="p-3 pb-2">
         <Link to="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-chart-2/20 flex items-center justify-center" style={{ boxShadow: "0 0 10px oklch(0.70 0.12 160 / 40%)" }}>
-            <Hospital className="h-5 w-5 text-chart-2" />
+          <div className="h-7 w-7 rounded-md bg-chart-2/10 flex items-center justify-center">
+            <Hospital className="h-4 w-4 text-chart-2" />
           </div>
           {!collapsed && (
-            <div>
-              <p className="text-sm font-bold text-chart-2">My Hospital</p>
-              <p className="text-[10px] text-muted-foreground -mt-0.5">MedFlow Nexus</p>
+            <div className="flex items-baseline gap-1">
+              <span className="text-sm font-semibold text-foreground tracking-tight">My Hospital</span>
             </div>
           )}
         </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Hospital Ops</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">Operations</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {hospitalNav.map(item => {
@@ -60,8 +59,8 @@ export function HospitalSidebar() {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
                       <Link to={item.url}>
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
+                        <item.icon className="h-3.5 w-3.5" />
+                        <span className="text-[13px]">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -71,14 +70,14 @@ export function HospitalSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Switch Mode</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">Switch</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Regional Intelligence">
                   <Link to="/dashboard">
-                    <Activity className="h-4 w-4" />
-                    <span>Regional Mode</span>
+                    <Activity className="h-3.5 w-3.5" />
+                    <span className="text-[13px]">Regional Mode</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

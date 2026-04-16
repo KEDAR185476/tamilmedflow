@@ -8,34 +8,34 @@ export function TopNavbar() {
   const isHospital = location.pathname.startsWith("/hospital");
 
   return (
-    <header className="h-14 flex items-center justify-between border-b border-border px-4 glass-strong">
+    <header className="h-12 flex items-center justify-between border-b border-border px-4 bg-card/30 backdrop-blur-md">
       <div className="flex items-center gap-3">
         <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
         {/* Mode Switcher */}
-        <div className="flex items-center bg-muted/50 rounded-lg p-0.5">
+        <div className="flex items-center bg-muted/40 rounded-md p-0.5 border border-border/50">
           <Link to="/dashboard"
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors ${!isHospital ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${!isHospital ? "bg-primary/15 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
             <Globe className="h-3 w-3" /> Regional
           </Link>
           <Link to="/hospital"
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors ${isHospital ? "bg-chart-2 text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${isHospital ? "bg-chart-2/15 text-chart-2" : "text-muted-foreground hover:text-foreground"}`}>
             <Hospital className="h-3 w-3" /> My Hospital
           </Link>
         </div>
         <DistrictSelector />
-        <div className="hidden lg:flex items-center gap-2 glass rounded-lg px-3 py-1.5">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <input type="text" placeholder="Search modules..."
-            className="bg-transparent border-none outline-none text-sm text-foreground placeholder:text-muted-foreground w-40" />
+        <div className="hidden lg:flex items-center gap-2 border border-border/50 rounded-md px-2.5 py-1.5 bg-muted/20">
+          <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          <input type="text" placeholder="Search..."
+            className="bg-transparent border-none outline-none text-xs text-foreground placeholder:text-muted-foreground w-32" />
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <button className="relative p-2 rounded-lg hover:bg-accent transition-colors">
-          <Bell className="h-4 w-4 text-muted-foreground" />
-          <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-destructive" />
+      <div className="flex items-center gap-2">
+        <button className="relative p-1.5 rounded-md hover:bg-accent transition-colors">
+          <Bell className="h-3.5 w-3.5 text-muted-foreground" />
+          <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-destructive" />
         </button>
-        <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
-          <User className="h-4 w-4 text-primary" />
+        <div className="h-7 w-7 rounded-md bg-muted/50 flex items-center justify-center border border-border/50">
+          <User className="h-3.5 w-3.5 text-muted-foreground" />
         </div>
       </div>
     </header>

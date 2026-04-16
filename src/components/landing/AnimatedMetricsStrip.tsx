@@ -10,7 +10,7 @@ const metrics = [
   { label: "AI Models Running", value: 7, suffix: " Live", icon: Brain, trend: null },
 ];
 
-function useCountUp(target: number, duration = 1800) {
+function useCountUp(target: number, duration = 1600) {
   const [current, setCurrent] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
@@ -49,17 +49,20 @@ function formatNumber(n: number): string {
 
 export function AnimatedMetricsStrip() {
   return (
-    <section className="w-full px-6 py-12 max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <h2 className="text-lg font-semibold text-foreground tracking-tight">
-          Tamil Nadu Health Network <span className="neon-text">Live Snapshot</span>
-        </h2>
-        <p className="text-[11px] text-muted-foreground mt-1">
-          Last Updated: Live Simulation · Official Sources (HMIS, NHP, TNHSP, DME)
+    <section className="px-6 lg:px-10 py-12 max-w-6xl mx-auto">
+      <div className="flex items-baseline justify-between mb-6">
+        <div>
+          <p className="text-[11px] uppercase tracking-widest text-muted-foreground/60 font-medium mb-1">Live Snapshot</p>
+          <h2 className="text-lg font-semibold text-foreground tracking-tight">
+            Tamil Nadu Health Network
+          </h2>
+        </div>
+        <p className="text-[10px] text-muted-foreground/50 hidden sm:block">
+          Sources: HMIS · NHP · TNHSP · DME
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-px bg-border/50 rounded-xl overflow-hidden border border-border/50">
         {metrics.map((m) => (
           <MetricCard key={m.label} metric={m} />
         ))}
@@ -75,39 +78,31 @@ function MetricCard({ metric }: { metric: (typeof metrics)[number] }) {
   return (
     <div
       ref={ref}
-      className="group glass-card rounded-xl p-4 border border-border/40 hover:border-primary/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_oklch(0.75_0.15_190/12%)] text-center relative overflow-hidden"
+      className="bg-card/20 hover:bg-card/40 transition-colors p-4 text-center relative"
     >
-      {/* Soft glow bg */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_center,var(--neon-glow),transparent_70%)]" />
+      <Icon className="h-3.5 w-3.5 text-muted-foreground/50 mx-auto mb-2" />
 
-      <div className="relative z-10">
-        <div className="mx-auto mb-2 h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Icon className="h-4 w-4 text-primary" />
-        </div>
-
-        <div className="flex items-center justify-center gap-1">
-          <span className="text-xl font-bold neon-text tabular-nums">
-            {formatNumber(current)}
-          </span>
-          {metric.suffix && (
-            <span className="text-xs text-primary/70 font-medium">{metric.suffix}</span>
-          )}
-          {metric.trend && (
-            <TrendingUp
-              className={`h-3 w-3 ml-0.5 ${
-                metric.trend === "up" ? "text-green-400" : "text-green-400 rotate-180"
-              }`}
-            />
-          )}
-        </div>
-
-        <p className="text-[10px] text-muted-foreground mt-1.5 leading-tight">{metric.label}</p>
-
-        {/* Live pulse dot for live metrics */}
-        {(metric.suffix === " Live" || metric.suffix === " Active") && (
-          <div className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+      <div className="flex items-center justify-center gap-1">
+        <span className="text-xl font-semibold text-foreground tabular-nums tracking-tight">
+          {formatNumber(current)}
+        </span>
+        {metric.suffix && (
+          <span className="text-[10px] text-muted-foreground font-medium">{metric.suffix}</span>
+        )}
+        {metric.trend && (
+          <TrendingUp
+            className={`h-3 w-3 ml-0.5 ${
+              metric.trend === "up" ? "text-success" : "text-success rotate-180"
+            }`}
+          />
         )}
       </div>
+
+      <p className="text-[10px] text-muted-foreground mt-1">{metric.label}</p>
+
+      {(metric.suffix === " Live" || metric.suffix === " Active") && (
+        <div className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-success/60 animate-pulse" />
+      )}
     </div>
   );
 }

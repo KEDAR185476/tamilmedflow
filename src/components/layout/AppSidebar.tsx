@@ -49,23 +49,23 @@ export function AppSidebar() {
   const location = useLocation();
 
   return (
-    <Sidebar collapsible="icon" className="border-r-0">
-      <SidebarHeader className="p-4">
+    <Sidebar collapsible="icon" className="border-r border-border/50 bg-sidebar">
+      <SidebarHeader className="p-3 pb-2">
         <Link to="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center glow-sm">
-            <Activity className="h-5 w-5 text-primary" />
+          <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center">
+            <Activity className="h-4 w-4 text-primary" />
           </div>
           {!collapsed && (
-            <div>
-              <p className="text-sm font-bold neon-text">MedFlow</p>
-              <p className="text-[10px] text-muted-foreground -mt-0.5">NEXUS</p>
+            <div className="flex items-baseline gap-1">
+              <span className="text-sm font-semibold text-foreground tracking-tight">MedFlow</span>
+              <span className="text-[9px] text-muted-foreground font-medium tracking-widest uppercase">Nexus</span>
             </div>
           )}
         </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Operations</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">Operations</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => <NavItem key={item.title} item={item} pathname={location.pathname} />)}
@@ -73,7 +73,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>AI Intelligence</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">Intelligence</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {aiItems.map((item) => <NavItem key={item.title} item={item} pathname={location.pathname} />)}
@@ -81,7 +81,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>System</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-medium">System</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {systemItems.map((item) => <NavItem key={item.title} item={item} pathname={location.pathname} />)}
@@ -100,8 +100,8 @@ function NavItem({ item, pathname }: { item: { title: string; url: string; icon:
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
         <Link to={item.url}>
-          <item.icon className="h-4 w-4" />
-          <span>{item.title}</span>
+          <item.icon className="h-3.5 w-3.5" />
+          <span className="text-[13px]">{item.title}</span>
         </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
