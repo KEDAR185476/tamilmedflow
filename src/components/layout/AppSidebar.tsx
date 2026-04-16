@@ -2,7 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import {
   LayoutDashboard, BedDouble, Users, Wrench, GitBranch,
   AlertTriangle, FlaskConical, FileBarChart, Settings, Activity,
-  Database, Terminal,
+  Database, Terminal, Brain, Eye, Lightbulb, MapPin,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -18,6 +18,16 @@ const navItems = [
   { title: "Patient Flow", url: "/dashboard/patient-flow", icon: GitBranch },
   { title: "Emergency Mode", url: "/dashboard/emergency", icon: AlertTriangle },
   { title: "Simulation Lab", url: "/dashboard/simulation", icon: FlaskConical },
+];
+
+const aiItems = [
+  { title: "Forecast Intelligence", url: "/dashboard/forecast", icon: Brain },
+  { title: "AI Transparency Lab", url: "/dashboard/ai-transparency", icon: Eye },
+  { title: "Recommendations", url: "/dashboard/recommendations", icon: Lightbulb },
+  { title: "District Predictions", url: "/dashboard/district-predictions", icon: MapPin },
+];
+
+const systemItems = [
   { title: "Data Transparency", url: "/dashboard/data-transparency", icon: Database },
   { title: "Admin / Debug", url: "/dashboard/admin", icon: Terminal },
   { title: "Reports", url: "/dashboard/reports", icon: FileBarChart },
@@ -46,23 +56,26 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Modules</SidebarGroupLabel>
+          <SidebarGroupLabel>Operations</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.url ||
-                  (item.url !== "/dashboard" && location.pathname.startsWith(item.url));
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
-                      <Link to={item.url}>
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
+              {navItems.map((item) => <NavItem key={item.title} item={item} pathname={location.pathname} />)}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>AI Intelligence</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {aiItems.map((item) => <NavItem key={item.title} item={item} pathname={location.pathname} />)}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>System</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {systemItems.map((item) => <NavItem key={item.title} item={item} pathname={location.pathname} />)}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
