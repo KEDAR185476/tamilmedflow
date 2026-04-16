@@ -321,7 +321,7 @@ function ResourcesPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
               <XAxis dataKey="day" stroke="rgba(255,255,255,0.3)" fontSize={10} />
               <YAxis stroke="rgba(255,255,255,0.3)" fontSize={10} />
-              <Tooltip contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 12 }} formatter={(v: number) => `₹${v}K`} />
+              <Tooltip contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 12 }} formatter={(v) => `₹${v}K`} />
               <Legend wrapperStyle={{ fontSize: 10 }} />
               <Bar dataKey="saved" name="Saved (₹K)" fill="hsl(150 70% 50%)" radius={[3, 3, 0, 0]} />
               <Bar dataKey="avoided" name="Purchase Avoided (₹K)" fill="hsl(190 70% 55%)" radius={[3, 3, 0, 0]} />
