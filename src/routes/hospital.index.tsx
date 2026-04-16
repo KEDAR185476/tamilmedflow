@@ -55,15 +55,7 @@ function HospitalHome() {
   const bedCount = onboarding?.totalBeds || tenant.beds || 200;
   const occupied = Math.round(bedCount * 0.76);
 
-  // Mock staff users for admin
-  const [staffUsers] = useState<Array<{ id: string; name: string; email: string; role: HospitalRole; active: boolean }>>([
-    { id: "1", name: "Dr. Priya Sharma", email: "priya@hospital.org", role: "doctor", active: true },
-    { id: "2", name: "Nurse Lakshmi K.", email: "lakshmi@hospital.org", role: "nurse_supervisor", active: true },
-    { id: "3", name: "Rajesh M.", email: "rajesh@hospital.org", role: "operations_manager", active: true },
-    { id: "4", name: "Anitha V.", email: "anitha@hospital.org", role: "equipment_manager", active: true },
-    { id: "5", name: "Dr. Karthik R.", email: "karthik@hospital.org", role: "emergency_coordinator", active: true },
-    { id: "6", name: "Meena S.", email: "meena@hospital.org", role: "analyst_viewer", active: false },
-  ]);
+
 
   const auditLog = [
     { time: "2 min ago", user: user.name, action: "Logged in", detail: "Session started" },
