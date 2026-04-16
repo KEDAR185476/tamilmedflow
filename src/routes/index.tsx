@@ -119,7 +119,7 @@ function LandingPage() {
               </Link>
 
               {/* My Hospital */}
-              <Link to="/hospital" className="group block">
+              <Link to="/hospital/login" className="group block">
                 <div className="glass rounded-2xl p-8 h-full border border-transparent hover:border-chart-2 transition-all duration-500 relative overflow-hidden" style={{ ["--hover-glow" as string]: "var(--chart-2)" }}>
                   {/* Background visual — hospital building */}
                   <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500">
