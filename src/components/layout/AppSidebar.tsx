@@ -2,6 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import {
   LayoutDashboard, BedDouble, Users, Wrench, GitBranch,
   AlertTriangle, FlaskConical, FileBarChart, Settings, Activity,
+  Database, Terminal,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -17,6 +18,8 @@ const navItems = [
   { title: "Patient Flow", url: "/dashboard/patient-flow", icon: GitBranch },
   { title: "Emergency Mode", url: "/dashboard/emergency", icon: AlertTriangle },
   { title: "Simulation Lab", url: "/dashboard/simulation", icon: FlaskConical },
+  { title: "Data Transparency", url: "/dashboard/data-transparency", icon: Database },
+  { title: "Admin / Debug", url: "/dashboard/admin", icon: Terminal },
   { title: "Reports", url: "/dashboard/reports", icon: FileBarChart },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
