@@ -14,6 +14,10 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HospitalIndexRouteImport } from './routes/hospital.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as HospitalSignupRouteImport } from './routes/hospital.signup'
+import { Route as HospitalOnboardingRouteImport } from './routes/hospital.onboarding'
+import { Route as HospitalLoginRouteImport } from './routes/hospital.login'
+import { Route as HospitalForgotPasswordRouteImport } from './routes/hospital.forgot-password'
 import { Route as DashboardWorkforceRouteImport } from './routes/dashboard.workforce'
 import { Route as DashboardTwinRouteImport } from './routes/dashboard.twin'
 import { Route as DashboardSimulationRouteImport } from './routes/dashboard.simulation'
@@ -61,6 +65,26 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+const HospitalSignupRoute = HospitalSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalOnboardingRoute = HospitalOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalLoginRoute = HospitalLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalForgotPasswordRoute = HospitalForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => HospitalRoute,
 } as any)
 const DashboardWorkforceRoute = DashboardWorkforceRouteImport.update({
   id: '/workforce',
@@ -203,6 +227,10 @@ export interface FileRoutesByFullPath {
   '/dashboard/simulation': typeof DashboardSimulationRoute
   '/dashboard/twin': typeof DashboardTwinRoute
   '/dashboard/workforce': typeof DashboardWorkforceRoute
+  '/hospital/forgot-password': typeof HospitalForgotPasswordRoute
+  '/hospital/login': typeof HospitalLoginRoute
+  '/hospital/onboarding': typeof HospitalOnboardingRoute
+  '/hospital/signup': typeof HospitalSignupRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/hospital/': typeof HospitalIndexRoute
 }
@@ -230,6 +258,10 @@ export interface FileRoutesByTo {
   '/dashboard/simulation': typeof DashboardSimulationRoute
   '/dashboard/twin': typeof DashboardTwinRoute
   '/dashboard/workforce': typeof DashboardWorkforceRoute
+  '/hospital/forgot-password': typeof HospitalForgotPasswordRoute
+  '/hospital/login': typeof HospitalLoginRoute
+  '/hospital/onboarding': typeof HospitalOnboardingRoute
+  '/hospital/signup': typeof HospitalSignupRoute
   '/dashboard': typeof DashboardIndexRoute
   '/hospital': typeof HospitalIndexRoute
 }
@@ -260,6 +292,10 @@ export interface FileRoutesById {
   '/dashboard/simulation': typeof DashboardSimulationRoute
   '/dashboard/twin': typeof DashboardTwinRoute
   '/dashboard/workforce': typeof DashboardWorkforceRoute
+  '/hospital/forgot-password': typeof HospitalForgotPasswordRoute
+  '/hospital/login': typeof HospitalLoginRoute
+  '/hospital/onboarding': typeof HospitalOnboardingRoute
+  '/hospital/signup': typeof HospitalSignupRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/hospital/': typeof HospitalIndexRoute
 }
@@ -291,6 +327,10 @@ export interface FileRouteTypes {
     | '/dashboard/simulation'
     | '/dashboard/twin'
     | '/dashboard/workforce'
+    | '/hospital/forgot-password'
+    | '/hospital/login'
+    | '/hospital/onboarding'
+    | '/hospital/signup'
     | '/dashboard/'
     | '/hospital/'
   fileRoutesByTo: FileRoutesByTo
@@ -318,6 +358,10 @@ export interface FileRouteTypes {
     | '/dashboard/simulation'
     | '/dashboard/twin'
     | '/dashboard/workforce'
+    | '/hospital/forgot-password'
+    | '/hospital/login'
+    | '/hospital/onboarding'
+    | '/hospital/signup'
     | '/dashboard'
     | '/hospital'
   id:
@@ -347,6 +391,10 @@ export interface FileRouteTypes {
     | '/dashboard/simulation'
     | '/dashboard/twin'
     | '/dashboard/workforce'
+    | '/hospital/forgot-password'
+    | '/hospital/login'
+    | '/hospital/onboarding'
+    | '/hospital/signup'
     | '/dashboard/'
     | '/hospital/'
   fileRoutesById: FileRoutesById
@@ -393,6 +441,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/hospital/signup': {
+      id: '/hospital/signup'
+      path: '/signup'
+      fullPath: '/hospital/signup'
+      preLoaderRoute: typeof HospitalSignupRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/onboarding': {
+      id: '/hospital/onboarding'
+      path: '/onboarding'
+      fullPath: '/hospital/onboarding'
+      preLoaderRoute: typeof HospitalOnboardingRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/login': {
+      id: '/hospital/login'
+      path: '/login'
+      fullPath: '/hospital/login'
+      preLoaderRoute: typeof HospitalLoginRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/forgot-password': {
+      id: '/hospital/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/hospital/forgot-password'
+      preLoaderRoute: typeof HospitalForgotPasswordRouteImport
+      parentRoute: typeof HospitalRoute
     }
     '/dashboard/workforce': {
       id: '/dashboard/workforce'
@@ -608,10 +684,18 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 )
 
 interface HospitalRouteChildren {
+  HospitalForgotPasswordRoute: typeof HospitalForgotPasswordRoute
+  HospitalLoginRoute: typeof HospitalLoginRoute
+  HospitalOnboardingRoute: typeof HospitalOnboardingRoute
+  HospitalSignupRoute: typeof HospitalSignupRoute
   HospitalIndexRoute: typeof HospitalIndexRoute
 }
 
 const HospitalRouteChildren: HospitalRouteChildren = {
+  HospitalForgotPasswordRoute: HospitalForgotPasswordRoute,
+  HospitalLoginRoute: HospitalLoginRoute,
+  HospitalOnboardingRoute: HospitalOnboardingRoute,
+  HospitalSignupRoute: HospitalSignupRoute,
   HospitalIndexRoute: HospitalIndexRoute,
 }
 
@@ -627,3 +711,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
