@@ -1,26 +1,48 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { WireframeZone } from "@/components/layout/WireframeZone";
-import { BedDouble, BarChart3, Brain, Map } from "lucide-react";
+import { useDistrictFilter } from "@/hooks/useDistrictFilter";
+import { DistrictSelector } from "@/components/dashboard/DistrictSelector";
+import { OccupancyByDistrictChart } from "@/components/dashboard/OccupancyChart";
+import { ICULoadChart } from "@/components/dashboard/ICULoadChart";
+import { BedAvailabilityChart } from "@/components/dashboard/BedAvailabilityChart";
+import { AccidentRiskChart } from "@/components/dashboard/AccidentRiskChart";
+import { StaffPressureChart } from "@/components/dashboard/StaffPressureChart";
+import { KPICard } from "@/components/layout/KPICard";
+import { getKPISummary } from "@/services/dataService";
+import { BedDouble, HeartPulse, AlertTriangle, TrendingUp } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/capacity")({
   component: CapacityPage,
 });
 
 function CapacityPage() {
+  const { selectedDistrict, districtName } = useDistrictFilter();
+  const kpi = getKPISummary(selectedDistrict === "all" ? undefined : selectedDistrict);
+
   return (
     <div className="space-y-6 animate-slide-up">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Capacity Intelligence</h1>
-        <p className="text-sm text-muted-foreground">Real-time bed management across Tamil Nadu government hospitals</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Capacity Intelligence</h1>
+          <p className="text-sm text-muted-foreground">{districtName} — Real-time bed management</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <KPICard icon={<BedDouble className="h-5 w-5" />} title="Total Beds" value={kpi.totalBeds.toLocaleString()} trend={`${kpi.occupancyRate}% occupied`} trendUp={kpi.occupancyRate < 85} />
+        <KPICard icon={<HeartPulse className="h-5 w-5" />} title="ICU Beds" value={`${kpi.icuOccupied}/${kpi.icuTotal}`} trend={`${kpi.icuRate}% utilized`} trendUp={kpi.icuRate < 85} />
+        <KPICard icon={<AlertTriangle className="h-5 w-5" />} title="High Risk" value={`${kpi.highRiskDistricts} districts`} trend={kpi.highRiskDistricts > 3 ? "Action needed" : "Stable"} trendUp={kpi.highRiskDistricts <= 3} />
+        <KPICard icon={<TrendingUp className="h-5 w-5" />} title="Occupancy Rate" value={`${kpi.occupancyRate}%`} trend="Network-wide" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <OccupancyByDistrictChart />
+        <ICULoadChart />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <WireframeZone title="Bed Grid — District-wise Occupancy" subtitle="38 districts • Color-coded by load level" icon={<BedDouble className="h-8 w-8" />} minHeight="300px" />
-        <WireframeZone title="Occupancy Trend Chart" subtitle="7-day trend • HMIS data source" icon={<BarChart3 className="h-8 w-8" />} minHeight="300px" />
+        <BedAvailabilityChart />
+        <AccidentRiskChart />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <WireframeZone title="AI Bed Demand Prediction" subtitle="Prophet + LSTM model • 72-hour forecast" icon={<Brain className="h-8 w-8" />} minHeight="280px" />
-        <WireframeZone title="Overflow Routing Map" subtitle="Inter-hospital transfer recommendations" icon={<Map className="h-8 w-8" />} minHeight="280px" />
-      </div>
+      <StaffPressureChart />
     </div>
   );
 }
