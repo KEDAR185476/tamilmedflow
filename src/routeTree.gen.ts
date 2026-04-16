@@ -9,8 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SecurityRouteImport } from './routes/security'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as HospitalRouteImport } from './routes/hospital'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HospitalIndexRouteImport } from './routes/hospital.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
@@ -54,6 +58,16 @@ import { Route as DashboardBedAllocationRouteImport } from './routes/dashboard.b
 import { Route as DashboardAiTransparencyRouteImport } from './routes/dashboard.ai-transparency'
 import { Route as DashboardAdminRouteImport } from './routes/dashboard.admin'
 
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HospitalRoute = HospitalRouteImport.update({
   id: '/hospital',
   path: '/hospital',
@@ -62,6 +76,16 @@ const HospitalRoute = HospitalRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -281,8 +305,12 @@ const DashboardAdminRoute = DashboardAdminRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/hospital': typeof HospitalRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/security': typeof SecurityRoute
   '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/ai-transparency': typeof DashboardAiTransparencyRoute
   '/dashboard/bed-allocation': typeof DashboardBedAllocationRoute
@@ -327,6 +355,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/pricing': typeof PricingRoute
+  '/security': typeof SecurityRoute
   '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/ai-transparency': typeof DashboardAiTransparencyRoute
   '/dashboard/bed-allocation': typeof DashboardBedAllocationRoute
@@ -372,8 +404,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/hospital': typeof HospitalRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/security': typeof SecurityRoute
   '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/ai-transparency': typeof DashboardAiTransparencyRoute
   '/dashboard/bed-allocation': typeof DashboardBedAllocationRoute
@@ -420,8 +456,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/contact'
     | '/dashboard'
     | '/hospital'
+    | '/pricing'
+    | '/security'
     | '/dashboard/admin'
     | '/dashboard/ai-transparency'
     | '/dashboard/bed-allocation'
@@ -466,6 +506,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/contact'
+    | '/pricing'
+    | '/security'
     | '/dashboard/admin'
     | '/dashboard/ai-transparency'
     | '/dashboard/bed-allocation'
@@ -510,8 +554,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/contact'
     | '/dashboard'
     | '/hospital'
+    | '/pricing'
+    | '/security'
     | '/dashboard/admin'
     | '/dashboard/ai-transparency'
     | '/dashboard/bed-allocation'
@@ -557,12 +605,30 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   HospitalRoute: typeof HospitalRouteWithChildren
+  PricingRoute: typeof PricingRoute
+  SecurityRoute: typeof SecurityRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hospital': {
       id: '/hospital'
       path: '/hospital'
@@ -575,6 +641,20 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -978,8 +1058,12 @@ const HospitalRouteWithChildren = HospitalRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
   HospitalRoute: HospitalRouteWithChildren,
+  PricingRoute: PricingRoute,
+  SecurityRoute: SecurityRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
