@@ -27,7 +27,7 @@ export function AccidentRiskChart() {
           <YAxis type="category" dataKey="name" tick={{ fill: "oklch(0.65 0.02 250)", fontSize: 11 }} width={55} />
           <Tooltip
             contentStyle={{ background: "oklch(0.17 0.02 260)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8 }}
-            formatter={(value: number, _: string, entry: any) => [
+            formatter={(value: any, _: any, entry: any) => [
               `Score: ${value} | Avg ${entry.payload.accidents}/day`,
               entry.payload.corridor
             ]}

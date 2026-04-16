@@ -36,7 +36,7 @@ export function ICULoadChart() {
           <YAxis tick={{ fill: "oklch(0.65 0.02 250)", fontSize: 11 }} />
           <Tooltip
             contentStyle={{ background: "oklch(0.17 0.02 260)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8 }}
-            formatter={(value: number, name: string) => [
+            formatter={(value: any, name: any) => [
               name === "rate" ? `${value}%` : value,
               name === "rate" ? "ICU Rate" : "ICU Beds Used"
             ]}

@@ -28,7 +28,7 @@ export function OccupancyByDistrictChart() {
           <Tooltip
             contentStyle={{ background: "oklch(0.17 0.02 260)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8 }}
             labelStyle={{ color: "oklch(0.95 0.01 250)" }}
-            formatter={(value: number, _: string, entry: any) => [
+            formatter={(value: any, _: any, entry: any) => [
               `${value}% (${entry.payload.occupied}/${entry.payload.beds} beds)`,
               "Occupancy"
             ]}
