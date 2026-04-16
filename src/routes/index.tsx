@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Activity, ArrowRight, Play, Shield, Database, Brain, Zap, CheckCircle, Globe, Building2, HeartPulse, Users, Eye, TrendingUp } from "lucide-react";
+import {
+  Activity, ArrowRight, Play, Shield, Database, Brain, Zap, CheckCircle,
+  Globe, Building2, HeartPulse, Users, Eye, TrendingUp, MapPin, Hospital,
+} from "lucide-react";
 import { AnimatedMetricsStrip } from "@/components/landing/AnimatedMetricsStrip";
 import { CapabilityCards } from "@/components/landing/CapabilityCards";
 import { useState } from "react";
@@ -24,7 +27,6 @@ function LandingPage() {
     <>
       {showDemo && <DemoStoryMode onClose={() => setShowDemo(false)} />}
       <div className="min-h-screen bg-background relative overflow-hidden">
-        {/* Background grid */}
         <div className="absolute inset-0 bg-[linear-gradient(oklch(1_0_0/3%)_1px,transparent_1px),linear-gradient(90deg,oklch(1_0_0/3%)_1px,transparent_1px)] bg-[size:60px_60px]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse,var(--neon-glow),transparent_70%)] opacity-30" />
 
@@ -52,7 +54,7 @@ function LandingPage() {
           </nav>
 
           {/* Hero */}
-          <section className="flex flex-col items-center text-center px-6 pt-20 pb-12 max-w-4xl mx-auto">
+          <section className="flex flex-col items-center text-center px-6 pt-20 pb-10 max-w-4xl mx-auto">
             <div className="glass rounded-full px-4 py-1.5 text-xs text-primary font-medium mb-6 animate-slide-down">
               🏥 Central Nervous System for 1,264 Government Hospitals
             </div>
@@ -62,23 +64,102 @@ function LandingPage() {
             <p className="text-xl md:text-2xl text-muted-foreground font-medium mb-2 animate-slide-up" style={{ animationDelay: "100ms" }}>
               AI-Powered Central Nervous System for Hospitals
             </p>
-            <p className="text-sm text-muted-foreground/70 max-w-lg mb-10 animate-slide-up" style={{ animationDelay: "200ms" }}>
+            <p className="text-sm text-muted-foreground/70 max-w-lg mb-8 animate-slide-up" style={{ animationDelay: "200ms" }}>
               From bed allocation to crisis response—one intelligent platform.
               Predict before crisis hits. Optimize every bed, every minute.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 animate-slide-up" style={{ animationDelay: "300ms" }}>
-              <button onClick={() => setShowDemo(true)}
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold hover:glow-lg transition-all duration-300">
-                <Play className="h-4 w-4" /> Start Demo
-              </button>
-              <Link to="/dashboard"
-                className="inline-flex items-center gap-2 glass rounded-xl px-6 py-3 font-semibold text-foreground hover:neon-border transition-all duration-300">
-                Explore Platform <ArrowRight className="h-4 w-4" />
+          </section>
+
+          {/* ===== DUAL GATEWAY ===== */}
+          <section className="px-6 pb-16 max-w-5xl mx-auto animate-slide-up" style={{ animationDelay: "300ms" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Regional Intelligence */}
+              <Link to="/dashboard" className="group block">
+                <div className="glass rounded-2xl p-8 h-full border border-transparent hover:neon-border transition-all duration-500 relative overflow-hidden">
+                  {/* Background visual — network map */}
+                  <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500">
+                    <svg viewBox="0 0 400 300" className="w-full h-full">
+                      <circle cx="120" cy="80" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="200" cy="60" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="280" cy="100" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="160" cy="140" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="240" cy="160" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="140" cy="200" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="220" cy="220" r="4" fill="currentColor" className="text-primary" />
+                      <circle cx="300" cy="180" r="4" fill="currentColor" className="text-primary" />
+                      <line x1="120" y1="80" x2="200" y2="60" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="200" y1="60" x2="280" y2="100" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="160" y1="140" x2="240" y2="160" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="120" y1="80" x2="160" y2="140" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="240" y1="160" x2="300" y2="180" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="140" y1="200" x2="220" y2="220" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="160" y1="140" x2="140" y2="200" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                      <line x1="280" y1="100" x2="300" y2="180" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
+                    </svg>
+                  </div>
+
+                  <div className="relative z-10">
+                    <div className="h-14 w-14 rounded-2xl bg-primary/15 flex items-center justify-center mb-5 group-hover:glow-md transition-all duration-500">
+                      <Globe className="h-7 w-7 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">Regional Intelligence Mode</h3>
+                    <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                      Tamil Nadu / District-wide forecasting, capacity analysis, simulation, and healthcare automation.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {["38 Districts", "AI Forecasting", "Crisis Planning", "Digital Twin"].map(tag => (
+                        <span key={tag} className="text-[10px] font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">{tag}</span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+                      Enter Regional Command Center <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
               </Link>
-              <a href="#impact"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                <TrendingUp className="h-4 w-4" /> View Impact
-              </a>
+
+              {/* My Hospital */}
+              <Link to="/hospital" className="group block">
+                <div className="glass rounded-2xl p-8 h-full border border-transparent hover:border-chart-2 transition-all duration-500 relative overflow-hidden" style={{ ["--hover-glow" as string]: "var(--chart-2)" }}>
+                  {/* Background visual — hospital building */}
+                  <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500">
+                    <svg viewBox="0 0 400 300" className="w-full h-full">
+                      {/* Main building */}
+                      <rect x="120" y="80" width="160" height="180" rx="4" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="1" />
+                      {/* Cross */}
+                      <rect x="185" y="100" width="30" height="8" fill="currentColor" className="text-chart-2" />
+                      <rect x="196" y="90" width="8" height="28" fill="currentColor" className="text-chart-2" />
+                      {/* Windows */}
+                      {[140, 170, 210, 240].map(x => [140, 180, 220].map(y => (
+                        <rect key={`${x}-${y}`} x={x} y={y} width="16" height="12" rx="1" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="0.5" />
+                      )))}
+                      {/* Door */}
+                      <rect x="185" y="230" width="30" height="30" rx="2" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="1" />
+                      {/* Wings */}
+                      <rect x="70" y="140" width="50" height="120" rx="3" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="0.5" />
+                      <rect x="280" y="140" width="50" height="120" rx="3" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="0.5" />
+                    </svg>
+                  </div>
+
+                  <div className="relative z-10">
+                    <div className="h-14 w-14 rounded-2xl bg-chart-2/15 flex items-center justify-center mb-5 group-hover:shadow-[0_0_20px_oklch(0.70_0.12_160/40%)] transition-all duration-500">
+                      <Hospital className="h-7 w-7 text-chart-2" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">My Hospital Mode</h3>
+                    <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                      Private hospital intelligence platform using your own hospital data. Personalized operations center.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {["Custom Data", "Bed Management", "Staff Ops", "Your Analytics"].map(tag => (
+                        <span key={tag} className="text-[10px] font-medium text-chart-2 bg-chart-2/10 px-2.5 py-1 rounded-full">{tag}</span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm font-semibold text-chart-2 group-hover:gap-3 transition-all">
+                      Enter My Hospital <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </div>
           </section>
 
@@ -126,7 +207,6 @@ function LandingPage() {
             </div>
           </section>
 
-          {/* Capabilities */}
           <section className="px-6 py-20 max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-3">System Capabilities</h2>
@@ -162,7 +242,7 @@ function LandingPage() {
             </div>
           </section>
 
-          {/* Investor metrics */}
+          {/* Investor */}
           <section className="px-6 py-16 max-w-5xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-foreground mb-3">Market Opportunity</h2>
@@ -197,10 +277,13 @@ function LandingPage() {
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg hover:glow-lg transition-all duration-300">
                 Enter Command Center <ArrowRight className="h-5 w-5" />
               </Link>
+              <Link to="/hospital"
+                className="inline-flex items-center gap-2 glass rounded-xl px-8 py-4 font-bold text-lg text-foreground hover:border-chart-2 border border-transparent transition-all duration-300">
+                <Hospital className="h-5 w-5 text-chart-2" /> My Hospital
+              </Link>
             </div>
           </section>
 
-          {/* Footer */}
           <footer className="glass-strong px-6 py-8 text-center">
             <p className="text-xs text-muted-foreground">
               MedFlow Nexus — Built for Tamil Nadu Directorate of Medical &amp; Rural Health Services

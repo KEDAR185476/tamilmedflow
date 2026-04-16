@@ -1,9 +1,8 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { Bell, Search, User, Globe, Hospital } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { DistrictSelector } from "@/components/dashboard/DistrictSelector";
 
-export function TopNavbar() {
+export function HospitalTopNavbar() {
   const location = useLocation();
   const isHospital = location.pathname.startsWith("/hospital");
 
@@ -22,11 +21,10 @@ export function TopNavbar() {
             <Hospital className="h-3 w-3" /> My Hospital
           </Link>
         </div>
-        <DistrictSelector />
         <div className="hidden lg:flex items-center gap-2 glass rounded-lg px-3 py-1.5">
           <Search className="h-4 w-4 text-muted-foreground" />
-          <input type="text" placeholder="Search modules..."
-            className="bg-transparent border-none outline-none text-sm text-foreground placeholder:text-muted-foreground w-40" />
+          <input type="text" placeholder="Search..."
+            className="bg-transparent border-none outline-none text-sm text-foreground placeholder:text-muted-foreground w-32" />
         </div>
       </div>
       <div className="flex items-center gap-3">
@@ -34,8 +32,8 @@ export function TopNavbar() {
           <Bell className="h-4 w-4 text-muted-foreground" />
           <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-destructive" />
         </button>
-        <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
-          <User className="h-4 w-4 text-primary" />
+        <div className="h-8 w-8 rounded-full bg-chart-2/20 flex items-center justify-center">
+          <User className="h-4 w-4 text-chart-2" />
         </div>
       </div>
     </header>
