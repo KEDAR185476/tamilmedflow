@@ -3,7 +3,7 @@ import {
   LayoutDashboard, BedDouble, Users, Wrench, GitBranch,
   AlertTriangle, FlaskConical, FileBarChart, Settings, Activity, Stethoscope, Gauge,
   Database, Terminal, Brain, Eye, Lightbulb, MapPin,
-  HeartPulse, Navigation,
+  HeartPulse, Navigation, Building2, Shield, BarChart3, Siren,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -22,8 +22,11 @@ const navItems = [
   { title: "Patient Flow", url: "/dashboard/patient-flow", icon: GitBranch },
   { title: "Intake Briefing", url: "/dashboard/intake", icon: Stethoscope },
   { title: "Efficiency", url: "/dashboard/efficiency", icon: Gauge },
-  { title: "Emergency Mode", url: "/dashboard/emergency", icon: AlertTriangle },
+  { title: "Emergency Mode", url: "/dashboard/emergency", icon: Siren },
   { title: "Simulation Lab", url: "/dashboard/simulation", icon: FlaskConical },
+  { title: "Digital Twin", url: "/dashboard/twin", icon: Building2 },
+  { title: "Crisis Planning", url: "/dashboard/crisis", icon: Shield },
+  { title: "Impact Analyzer", url: "/dashboard/impact", icon: BarChart3 },
 ];
 
 const aiItems = [
