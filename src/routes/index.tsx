@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Activity, ArrowRight, Play, Shield, Database, Brain, Zap, CheckCircle,
   Globe, Building2, HeartPulse, Users, Eye, TrendingUp, MapPin, Hospital,
+  Rocket, BarChart3, Lock, FileCheck, Sparkles,
 } from "lucide-react";
 import { AnimatedMetricsStrip } from "@/components/landing/AnimatedMetricsStrip";
 import { CapabilityCards } from "@/components/landing/CapabilityCards";
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "MedFlow Nexus — AI-Powered Hospital Intelligence for Tamil Nadu" },
-      { name: "description", content: "AI-powered Central Nervous System for Tamil Nadu hospitals. Real-time capacity, workforce, and emergency intelligence across 38 districts." },
+      { name: "description", content: "One AI platform for statewide healthcare intelligence and private hospital automation. Real-time capacity, workforce, and emergency intelligence across 38 districts." },
       { property: "og:title", content: "MedFlow Nexus — AI Hospital Intelligence" },
       { property: "og:description", content: "Central Nervous System for Tamil Nadu healthcare optimization." },
     ],
@@ -22,10 +23,63 @@ export const Route = createFileRoute("/")({
 
 function LandingPage() {
   const [showDemo, setShowDemo] = useState(false);
+  const [activating, setActivating] = useState(false);
+  const [activated, setActivated] = useState(false);
+
+  const handleActivate = () => {
+    setActivating(true);
+    setTimeout(() => { setActivating(false); setActivated(true); }, 3000);
+  };
 
   return (
     <>
       {showDemo && <DemoStoryMode onClose={() => setShowDemo(false)} />}
+
+      {/* Activation Overlay */}
+      {(activating || activated) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-xl">
+          {activating ? (
+            <div className="text-center animate-fade-in">
+              <div className="relative mx-auto mb-8">
+                <div className="h-24 w-24 rounded-full border-4 border-primary/30 border-t-primary animate-spin mx-auto" />
+                <Activity className="h-10 w-10 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              </div>
+              <h2 className="text-2xl font-bold neon-text mb-2">Activating MedFlow Nexus</h2>
+              <p className="text-sm text-muted-foreground">Booting AI engines · Connecting districts · Loading hospital data</p>
+            </div>
+          ) : (
+            <div className="text-center max-w-lg animate-scale-in">
+              <div className="h-20 w-20 rounded-full bg-primary/15 flex items-center justify-center mx-auto mb-6 glow-lg">
+                <CheckCircle className="h-10 w-10 text-primary" />
+              </div>
+              <h2 className="text-3xl font-bold neon-text mb-4">MedFlow Nexus Active</h2>
+              <div className="grid grid-cols-2 gap-3 mb-8">
+                {[
+                  { label: "Beds Optimized", value: "12,400+" },
+                  { label: "Wait Time Reduced", value: "23%" },
+                  { label: "Staff Balanced", value: "38 Districts" },
+                  { label: "Emergencies Managed", value: "Real-time" },
+                ].map(m => (
+                  <div key={m.label} className="glass rounded-xl p-3">
+                    <p className="text-lg font-bold neon-text">{m.value}</p>
+                    <p className="text-[10px] text-muted-foreground">{m.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-center gap-3">
+                <Link to="/dashboard" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold hover:glow-md transition-all">
+                  <Globe className="h-4 w-4" /> Regional Command
+                </Link>
+                <Link to="/hospital/login" className="inline-flex items-center gap-2 glass rounded-xl px-6 py-3 font-semibold hover:neon-border transition-all">
+                  <Hospital className="h-4 w-4 text-chart-2" /> My Hospital
+                </Link>
+              </div>
+              <button onClick={() => setActivated(false)} className="mt-4 text-xs text-muted-foreground hover:text-foreground">Close</button>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="min-h-screen bg-background relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(oklch(1_0_0/3%)_1px,transparent_1px),linear-gradient(90deg,oklch(1_0_0/3%)_1px,transparent_1px)] bg-[size:60px_60px]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse,var(--neon-glow),transparent_70%)] opacity-30" />
@@ -41,6 +95,12 @@ function LandingPage() {
                 <span className="text-lg font-bold neon-text">MedFlow</span>
                 <span className="text-xs text-muted-foreground ml-1">NEXUS</span>
               </div>
+            </div>
+            <div className="hidden md:flex items-center gap-4 text-xs text-muted-foreground">
+              <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
+              <Link to="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
+              <Link to="/security" className="hover:text-foreground transition-colors">Security</Link>
+              <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
             </div>
             <div className="flex items-center gap-3">
               <button onClick={() => setShowDemo(true)}
@@ -62,11 +122,11 @@ function LandingPage() {
               Med<span className="neon-text">Flow</span> Nexus
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-medium mb-2 animate-slide-up" style={{ animationDelay: "100ms" }}>
-              AI-Powered Central Nervous System for Hospitals
+              One AI Platform for Statewide Healthcare Intelligence<br className="hidden md:block" /> and Private Hospital Automation
             </p>
             <p className="text-sm text-muted-foreground/70 max-w-lg mb-8 animate-slide-up" style={{ animationDelay: "200ms" }}>
-              From bed allocation to crisis response—one intelligent platform.
               Predict before crisis hits. Optimize every bed, every minute.
+              From state command centers to individual hospital wards.
             </p>
           </section>
 
@@ -76,7 +136,6 @@ function LandingPage() {
               {/* Regional Intelligence */}
               <Link to="/dashboard" className="group block">
                 <div className="glass rounded-2xl p-8 h-full border border-transparent hover:neon-border transition-all duration-500 relative overflow-hidden">
-                  {/* Background visual — network map */}
                   <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500">
                     <svg viewBox="0 0 400 300" className="w-full h-full">
                       <circle cx="120" cy="80" r="4" fill="currentColor" className="text-primary" />
@@ -97,7 +156,6 @@ function LandingPage() {
                       <line x1="280" y1="100" x2="300" y2="180" stroke="currentColor" className="text-primary" strokeWidth="0.5" />
                     </svg>
                   </div>
-
                   <div className="relative z-10">
                     <div className="h-14 w-14 rounded-2xl bg-primary/15 flex items-center justify-center mb-5 group-hover:glow-md transition-all duration-500">
                       <Globe className="h-7 w-7 text-primary" />
@@ -120,27 +178,20 @@ function LandingPage() {
 
               {/* My Hospital */}
               <Link to="/hospital/login" className="group block">
-                <div className="glass rounded-2xl p-8 h-full border border-transparent hover:border-chart-2 transition-all duration-500 relative overflow-hidden" style={{ ["--hover-glow" as string]: "var(--chart-2)" }}>
-                  {/* Background visual — hospital building */}
+                <div className="glass rounded-2xl p-8 h-full border border-transparent hover:border-chart-2 transition-all duration-500 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500">
                     <svg viewBox="0 0 400 300" className="w-full h-full">
-                      {/* Main building */}
                       <rect x="120" y="80" width="160" height="180" rx="4" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="1" />
-                      {/* Cross */}
                       <rect x="185" y="100" width="30" height="8" fill="currentColor" className="text-chart-2" />
                       <rect x="196" y="90" width="8" height="28" fill="currentColor" className="text-chart-2" />
-                      {/* Windows */}
                       {[140, 170, 210, 240].map(x => [140, 180, 220].map(y => (
                         <rect key={`${x}-${y}`} x={x} y={y} width="16" height="12" rx="1" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="0.5" />
                       )))}
-                      {/* Door */}
                       <rect x="185" y="230" width="30" height="30" rx="2" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="1" />
-                      {/* Wings */}
                       <rect x="70" y="140" width="50" height="120" rx="3" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="0.5" />
                       <rect x="280" y="140" width="50" height="120" rx="3" fill="none" stroke="currentColor" className="text-chart-2" strokeWidth="0.5" />
                     </svg>
                   </div>
-
                   <div className="relative z-10">
                     <div className="h-14 w-14 rounded-2xl bg-chart-2/15 flex items-center justify-center mb-5 group-hover:shadow-[0_0_20px_oklch(0.70_0.12_160/40%)] transition-all duration-500">
                       <Hospital className="h-7 w-7 text-chart-2" />
@@ -185,8 +236,30 @@ function LandingPage() {
 
           <AnimatedMetricsStrip />
 
+          {/* Who Uses MedFlow Nexus */}
+          <section className="px-6 py-16 max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-foreground mb-3">Who Uses MedFlow Nexus?</h2>
+              <p className="text-muted-foreground">Designed for every stakeholder in the healthcare ecosystem</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: Globe, title: "State Health Directorates", desc: "Monitor all districts, coordinate crisis response, optimize statewide resources" },
+                { icon: Building2, title: "District Collectors", desc: "Local capacity management, emergency preparedness, performance benchmarks" },
+                { icon: Hospital, title: "Hospital Administrators", desc: "Private hospital ops, bed management, staff optimization, AI automation" },
+                { icon: Users, title: "Doctors & Nurses", desc: "Patient flow visibility, equipment status, shift management, alert feeds" },
+              ].map(u => (
+                <div key={u.title} className="glass rounded-xl p-5 hover:neon-border transition-all">
+                  <u.icon className="h-6 w-6 text-primary mb-3" />
+                  <h4 className="font-semibold text-sm mb-1">{u.title}</h4>
+                  <p className="text-xs text-muted-foreground">{u.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Impact Metrics */}
-          <section id="impact" className="px-6 py-16 max-w-5xl mx-auto">
+          <section className="px-6 py-16 max-w-5xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-foreground mb-3">Measurable Impact</h2>
               <p className="text-muted-foreground">Projected outcomes based on AI-optimized hospital operations</p>
@@ -202,6 +275,28 @@ function LandingPage() {
                   <metric.icon className="h-6 w-6 text-primary mx-auto mb-3" />
                   <p className="text-3xl font-black neon-text">{metric.value}</p>
                   <p className="text-xs text-muted-foreground mt-2">{metric.label}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Platform Analytics */}
+          <section className="px-6 py-16 max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-foreground mb-3">Platform at Scale</h2>
+              <p className="text-muted-foreground">Internal usage metrics across the MedFlow Nexus ecosystem</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {[
+                { value: "1,264", label: "Hospitals Covered" },
+                { value: "38", label: "Districts Monitored" },
+                { value: "47K+", label: "AI Actions/Day" },
+                { value: "820+", label: "Hours Saved/Week" },
+                { value: "12%", label: "Occupancy Gain" },
+              ].map(m => (
+                <div key={m.label} className="glass rounded-xl p-4 text-center">
+                  <p className="text-2xl font-bold neon-text">{m.value}</p>
+                  <p className="text-[10px] text-muted-foreground mt-1">{m.label}</p>
                 </div>
               ))}
             </div>
@@ -264,7 +359,7 @@ function LandingPage() {
             </div>
           </section>
 
-          {/* CTA */}
+          {/* ACTIVATE CTA */}
           <section className="px-6 py-20 text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
               Ready to Transform Hospital Operations?
@@ -272,28 +367,69 @@ function LandingPage() {
             <p className="text-muted-foreground mb-8">
               MedFlow Nexus is built for Tamil Nadu's healthcare network — scalable to any state, any country.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
               <Link to="/dashboard"
                 className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg hover:glow-lg transition-all duration-300">
                 Enter Command Center <ArrowRight className="h-5 w-5" />
               </Link>
-              <Link to="/hospital"
+              <Link to="/hospital/login"
                 className="inline-flex items-center gap-2 glass rounded-xl px-8 py-4 font-bold text-lg text-foreground hover:border-chart-2 border border-transparent transition-all duration-300">
                 <Hospital className="h-5 w-5 text-chart-2" /> My Hospital
               </Link>
             </div>
+            <button
+              onClick={handleActivate}
+              disabled={activating}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-primary via-chart-2 to-chart-5 text-white px-10 py-4 rounded-2xl font-black text-lg hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_oklch(0.75_0.15_190/30%)]"
+            >
+              <Rocket className="h-5 w-5" /> ACTIVATE MEDFLOW NEXUS
+            </button>
           </section>
 
-          <footer className="glass-strong px-6 py-8 text-center">
-            <p className="text-xs text-muted-foreground">
-              MedFlow Nexus — Built for Tamil Nadu Directorate of Medical &amp; Rural Health Services
-            </p>
-            <p className="text-xs text-muted-foreground/50 mt-1">
-              Data sources: HMIS India · NHP · TNHSP · DME Tamil Nadu · NVBDCP · IDSP · IMD · MoRTH · Census 2011
-            </p>
-            <p className="text-[10px] text-muted-foreground/30 mt-2">
-              Prototype uses public datasets + modeled operational data. Not connected to live hospital feeds.
-            </p>
+          {/* Footer */}
+          <footer className="glass-strong px-6 py-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-3">Product</h4>
+                  <div className="space-y-1.5">
+                    <Link to="/dashboard" className="block text-xs text-muted-foreground hover:text-foreground">Regional Mode</Link>
+                    <Link to="/hospital/login" className="block text-xs text-muted-foreground hover:text-foreground">My Hospital</Link>
+                    <Link to="/pricing" className="block text-xs text-muted-foreground hover:text-foreground">Pricing</Link>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-3">Company</h4>
+                  <div className="space-y-1.5">
+                    <Link to="/about" className="block text-xs text-muted-foreground hover:text-foreground">About</Link>
+                    <Link to="/contact" className="block text-xs text-muted-foreground hover:text-foreground">Contact Sales</Link>
+                    <span className="block text-xs text-muted-foreground">Careers (Coming Soon)</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-3">Trust</h4>
+                  <div className="space-y-1.5">
+                    <Link to="/security" className="block text-xs text-muted-foreground hover:text-foreground">Security</Link>
+                    <span className="block text-xs text-muted-foreground">API Docs (Coming Soon)</span>
+                    <span className="block text-xs text-muted-foreground">Documentation</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-3">Data Sources</h4>
+                  <p className="text-[10px] text-muted-foreground leading-relaxed">
+                    HMIS India · NHP · TNHSP · DME Tamil Nadu · NVBDCP · IDSP · IMD · MoRTH · Census 2011
+                  </p>
+                </div>
+              </div>
+              <div className="border-t border-border/30 pt-4 text-center">
+                <p className="text-xs text-muted-foreground">
+                  MedFlow Nexus — Built for Tamil Nadu Directorate of Medical &amp; Rural Health Services
+                </p>
+                <p className="text-[10px] text-muted-foreground/30 mt-1">
+                  Prototype uses public datasets + modeled operational data. Not connected to live hospital feeds.
+                </p>
+              </div>
+            </div>
           </footer>
         </div>
       </div>
