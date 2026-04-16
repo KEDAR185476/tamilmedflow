@@ -27,7 +27,6 @@ export const API_ENDPOINTS = {
     intake: "/api/v1/intake/briefings",
     efficiency: "/api/v1/efficiency/overview",
   },
-  },
   patients: {
     flow: "/api/v1/patients/flow",
     waitTimes: "/api/v1/patients/wait-times",
