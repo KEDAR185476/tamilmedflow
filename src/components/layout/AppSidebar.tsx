@@ -83,3 +83,18 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+
+function NavItem({ item, pathname }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }> }; pathname: string }) {
+  const isActive = pathname === item.url ||
+    (item.url !== "/dashboard" && pathname.startsWith(item.url));
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
+        <Link to={item.url}>
+          <item.icon className="h-4 w-4" />
+          <span>{item.title}</span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+}

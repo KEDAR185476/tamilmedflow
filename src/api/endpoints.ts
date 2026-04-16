@@ -31,4 +31,16 @@ export const API_ENDPOINTS = {
     run: "/api/v1/simulation/run",
     scenarios: "/api/v1/simulation/scenarios",
   },
+  // Part 3: AI Intelligence Layer
+  forecast: {
+    admissions: "/api/v1/forecast/admissions",
+    icu: "/api/v1/forecast/icu",
+    occupancy: "/api/v1/predict/occupancy",
+    surge: "/api/v1/predict/surge",
+  },
+  ai: {
+    recommendations: "/api/v1/recommendations",
+    modelsStatus: "/api/v1/models/status",
+    datasetsList: "/api/v1/datasets/list",
+  },
 } as const;
