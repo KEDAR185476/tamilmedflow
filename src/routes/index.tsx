@@ -139,9 +139,13 @@ function LandingPage() {
                   className="inline-flex items-center gap-2 border border-border text-foreground px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-accent transition-colors">
                   <Hospital className="h-4 w-4" /> My Hospital
                 </Link>
+                <Link to="/judge-demo"
+                  className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold text-primary border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-colors">
+                  <Sparkles className="h-3.5 w-3.5" /> Judge Demo Mode
+                </Link>
                 <Link to="/judge-mode"
                   className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  <Play className="h-3 w-3" /> Judge demo
+                  <Play className="h-3 w-3" /> Quick tour
                 </Link>
               </div>
             </div>
