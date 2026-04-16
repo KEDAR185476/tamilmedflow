@@ -19,7 +19,9 @@ import { Route as DashboardReportsRouteImport } from './routes/dashboard.reports
 import { Route as DashboardPatientFlowRouteImport } from './routes/dashboard.patient-flow'
 import { Route as DashboardEquipmentRouteImport } from './routes/dashboard.equipment'
 import { Route as DashboardEmergencyRouteImport } from './routes/dashboard.emergency'
+import { Route as DashboardDataTransparencyRouteImport } from './routes/dashboard.data-transparency'
 import { Route as DashboardCapacityRouteImport } from './routes/dashboard.capacity'
+import { Route as DashboardAdminRouteImport } from './routes/dashboard.admin'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -71,16 +73,29 @@ const DashboardEmergencyRoute = DashboardEmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardDataTransparencyRoute =
+  DashboardDataTransparencyRouteImport.update({
+    id: '/data-transparency',
+    path: '/data-transparency',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardCapacityRoute = DashboardCapacityRouteImport.update({
   id: '/capacity',
   path: '/capacity',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAdminRoute = DashboardAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => DashboardRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/capacity': typeof DashboardCapacityRoute
+  '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
@@ -92,7 +107,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/capacity': typeof DashboardCapacityRoute
+  '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
@@ -106,7 +123,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/capacity': typeof DashboardCapacityRoute
+  '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
@@ -121,7 +140,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/dashboard/admin'
     | '/dashboard/capacity'
+    | '/dashboard/data-transparency'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
     | '/dashboard/patient-flow'
@@ -133,7 +154,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dashboard/admin'
     | '/dashboard/capacity'
+    | '/dashboard/data-transparency'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
     | '/dashboard/patient-flow'
@@ -146,7 +169,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/dashboard/admin'
     | '/dashboard/capacity'
+    | '/dashboard/data-transparency'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
     | '/dashboard/patient-flow'
@@ -234,6 +259,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardEmergencyRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/data-transparency': {
+      id: '/dashboard/data-transparency'
+      path: '/data-transparency'
+      fullPath: '/dashboard/data-transparency'
+      preLoaderRoute: typeof DashboardDataTransparencyRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/capacity': {
       id: '/dashboard/capacity'
       path: '/capacity'
@@ -241,11 +273,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardCapacityRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/admin': {
+      id: '/dashboard/admin'
+      path: '/admin'
+      fullPath: '/dashboard/admin'
+      preLoaderRoute: typeof DashboardAdminRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
+  DashboardAdminRoute: typeof DashboardAdminRoute
   DashboardCapacityRoute: typeof DashboardCapacityRoute
+  DashboardDataTransparencyRoute: typeof DashboardDataTransparencyRoute
   DashboardEmergencyRoute: typeof DashboardEmergencyRoute
   DashboardEquipmentRoute: typeof DashboardEquipmentRoute
   DashboardPatientFlowRoute: typeof DashboardPatientFlowRoute
@@ -257,7 +298,9 @@ interface DashboardRouteChildren {
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAdminRoute: DashboardAdminRoute,
   DashboardCapacityRoute: DashboardCapacityRoute,
+  DashboardDataTransparencyRoute: DashboardDataTransparencyRoute,
   DashboardEmergencyRoute: DashboardEmergencyRoute,
   DashboardEquipmentRoute: DashboardEquipmentRoute,
   DashboardPatientFlowRoute: DashboardPatientFlowRoute,
@@ -279,3 +322,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
