@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import {
   LayoutDashboard, BedDouble, Users, Wrench, GitBranch,
-  AlertTriangle, FlaskConical, FileBarChart, Settings, Activity,
+  AlertTriangle, FlaskConical, FileBarChart, Settings, Activity, Stethoscope, Gauge,
   Database, Terminal, Brain, Eye, Lightbulb, MapPin,
   HeartPulse, Navigation,
 } from "lucide-react";
@@ -20,6 +20,8 @@ const navItems = [
   { title: "Workforce", url: "/dashboard/workforce", icon: Users },
   { title: "Equipment", url: "/dashboard/equipment", icon: Wrench },
   { title: "Patient Flow", url: "/dashboard/patient-flow", icon: GitBranch },
+  { title: "Intake Briefing", url: "/dashboard/intake", icon: Stethoscope },
+  { title: "Efficiency", url: "/dashboard/efficiency", icon: Gauge },
   { title: "Emergency Mode", url: "/dashboard/emergency", icon: AlertTriangle },
   { title: "Simulation Lab", url: "/dashboard/simulation", icon: FlaskConical },
 ];

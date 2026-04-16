@@ -19,10 +19,12 @@ import { Route as DashboardResourceRoutingRouteImport } from './routes/dashboard
 import { Route as DashboardReportsRouteImport } from './routes/dashboard.reports'
 import { Route as DashboardRecommendationsRouteImport } from './routes/dashboard.recommendations'
 import { Route as DashboardPatientFlowRouteImport } from './routes/dashboard.patient-flow'
+import { Route as DashboardIntakeRouteImport } from './routes/dashboard.intake'
 import { Route as DashboardIcuOperationsRouteImport } from './routes/dashboard.icu-operations'
 import { Route as DashboardForecastRouteImport } from './routes/dashboard.forecast'
 import { Route as DashboardEquipmentRouteImport } from './routes/dashboard.equipment'
 import { Route as DashboardEmergencyRouteImport } from './routes/dashboard.emergency'
+import { Route as DashboardEfficiencyRouteImport } from './routes/dashboard.efficiency'
 import { Route as DashboardDistrictPredictionsRouteImport } from './routes/dashboard.district-predictions'
 import { Route as DashboardDataTransparencyRouteImport } from './routes/dashboard.data-transparency'
 import { Route as DashboardCapacityRouteImport } from './routes/dashboard.capacity'
@@ -82,6 +84,11 @@ const DashboardPatientFlowRoute = DashboardPatientFlowRouteImport.update({
   path: '/patient-flow',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardIntakeRoute = DashboardIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardIcuOperationsRoute = DashboardIcuOperationsRouteImport.update({
   id: '/icu-operations',
   path: '/icu-operations',
@@ -100,6 +107,11 @@ const DashboardEquipmentRoute = DashboardEquipmentRouteImport.update({
 const DashboardEmergencyRoute = DashboardEmergencyRouteImport.update({
   id: '/emergency',
   path: '/emergency',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardEfficiencyRoute = DashboardEfficiencyRouteImport.update({
+  id: '/efficiency',
+  path: '/efficiency',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardDistrictPredictionsRoute =
@@ -144,10 +156,12 @@ export interface FileRoutesByFullPath {
   '/dashboard/capacity': typeof DashboardCapacityRoute
   '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
   '/dashboard/district-predictions': typeof DashboardDistrictPredictionsRoute
+  '/dashboard/efficiency': typeof DashboardEfficiencyRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
   '/dashboard/forecast': typeof DashboardForecastRoute
   '/dashboard/icu-operations': typeof DashboardIcuOperationsRoute
+  '/dashboard/intake': typeof DashboardIntakeRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
   '/dashboard/recommendations': typeof DashboardRecommendationsRoute
   '/dashboard/reports': typeof DashboardReportsRoute
@@ -165,10 +179,12 @@ export interface FileRoutesByTo {
   '/dashboard/capacity': typeof DashboardCapacityRoute
   '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
   '/dashboard/district-predictions': typeof DashboardDistrictPredictionsRoute
+  '/dashboard/efficiency': typeof DashboardEfficiencyRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
   '/dashboard/forecast': typeof DashboardForecastRoute
   '/dashboard/icu-operations': typeof DashboardIcuOperationsRoute
+  '/dashboard/intake': typeof DashboardIntakeRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
   '/dashboard/recommendations': typeof DashboardRecommendationsRoute
   '/dashboard/reports': typeof DashboardReportsRoute
@@ -188,10 +204,12 @@ export interface FileRoutesById {
   '/dashboard/capacity': typeof DashboardCapacityRoute
   '/dashboard/data-transparency': typeof DashboardDataTransparencyRoute
   '/dashboard/district-predictions': typeof DashboardDistrictPredictionsRoute
+  '/dashboard/efficiency': typeof DashboardEfficiencyRoute
   '/dashboard/emergency': typeof DashboardEmergencyRoute
   '/dashboard/equipment': typeof DashboardEquipmentRoute
   '/dashboard/forecast': typeof DashboardForecastRoute
   '/dashboard/icu-operations': typeof DashboardIcuOperationsRoute
+  '/dashboard/intake': typeof DashboardIntakeRoute
   '/dashboard/patient-flow': typeof DashboardPatientFlowRoute
   '/dashboard/recommendations': typeof DashboardRecommendationsRoute
   '/dashboard/reports': typeof DashboardReportsRoute
@@ -212,10 +230,12 @@ export interface FileRouteTypes {
     | '/dashboard/capacity'
     | '/dashboard/data-transparency'
     | '/dashboard/district-predictions'
+    | '/dashboard/efficiency'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
     | '/dashboard/forecast'
     | '/dashboard/icu-operations'
+    | '/dashboard/intake'
     | '/dashboard/patient-flow'
     | '/dashboard/recommendations'
     | '/dashboard/reports'
@@ -233,10 +253,12 @@ export interface FileRouteTypes {
     | '/dashboard/capacity'
     | '/dashboard/data-transparency'
     | '/dashboard/district-predictions'
+    | '/dashboard/efficiency'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
     | '/dashboard/forecast'
     | '/dashboard/icu-operations'
+    | '/dashboard/intake'
     | '/dashboard/patient-flow'
     | '/dashboard/recommendations'
     | '/dashboard/reports'
@@ -255,10 +277,12 @@ export interface FileRouteTypes {
     | '/dashboard/capacity'
     | '/dashboard/data-transparency'
     | '/dashboard/district-predictions'
+    | '/dashboard/efficiency'
     | '/dashboard/emergency'
     | '/dashboard/equipment'
     | '/dashboard/forecast'
     | '/dashboard/icu-operations'
+    | '/dashboard/intake'
     | '/dashboard/patient-flow'
     | '/dashboard/recommendations'
     | '/dashboard/reports'
@@ -346,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPatientFlowRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/intake': {
+      id: '/dashboard/intake'
+      path: '/intake'
+      fullPath: '/dashboard/intake'
+      preLoaderRoute: typeof DashboardIntakeRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/icu-operations': {
       id: '/dashboard/icu-operations'
       path: '/icu-operations'
@@ -372,6 +403,13 @@ declare module '@tanstack/react-router' {
       path: '/emergency'
       fullPath: '/dashboard/emergency'
       preLoaderRoute: typeof DashboardEmergencyRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/efficiency': {
+      id: '/dashboard/efficiency'
+      path: '/efficiency'
+      fullPath: '/dashboard/efficiency'
+      preLoaderRoute: typeof DashboardEfficiencyRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/district-predictions': {
@@ -426,10 +464,12 @@ interface DashboardRouteChildren {
   DashboardCapacityRoute: typeof DashboardCapacityRoute
   DashboardDataTransparencyRoute: typeof DashboardDataTransparencyRoute
   DashboardDistrictPredictionsRoute: typeof DashboardDistrictPredictionsRoute
+  DashboardEfficiencyRoute: typeof DashboardEfficiencyRoute
   DashboardEmergencyRoute: typeof DashboardEmergencyRoute
   DashboardEquipmentRoute: typeof DashboardEquipmentRoute
   DashboardForecastRoute: typeof DashboardForecastRoute
   DashboardIcuOperationsRoute: typeof DashboardIcuOperationsRoute
+  DashboardIntakeRoute: typeof DashboardIntakeRoute
   DashboardPatientFlowRoute: typeof DashboardPatientFlowRoute
   DashboardRecommendationsRoute: typeof DashboardRecommendationsRoute
   DashboardReportsRoute: typeof DashboardReportsRoute
@@ -447,10 +487,12 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardCapacityRoute: DashboardCapacityRoute,
   DashboardDataTransparencyRoute: DashboardDataTransparencyRoute,
   DashboardDistrictPredictionsRoute: DashboardDistrictPredictionsRoute,
+  DashboardEfficiencyRoute: DashboardEfficiencyRoute,
   DashboardEmergencyRoute: DashboardEmergencyRoute,
   DashboardEquipmentRoute: DashboardEquipmentRoute,
   DashboardForecastRoute: DashboardForecastRoute,
   DashboardIcuOperationsRoute: DashboardIcuOperationsRoute,
+  DashboardIntakeRoute: DashboardIntakeRoute,
   DashboardPatientFlowRoute: DashboardPatientFlowRoute,
   DashboardRecommendationsRoute: DashboardRecommendationsRoute,
   DashboardReportsRoute: DashboardReportsRoute,
