@@ -8,7 +8,8 @@
  * - Reserve team: 15% of total staff should be available for surge
  */
 
-import { STAFF_DATA, type StaffData } from "@/data/staff-equipment";
+import { STAFF_DATA } from "@/data/staff-equipment";
+import type { StaffData } from "@/data/types";
 import { getHospitalsByDistrict } from "@/data/hospitals";
 import { TN_DISTRICTS } from "@/data/districts";
 
