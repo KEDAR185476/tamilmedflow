@@ -3,6 +3,7 @@ import {
   LayoutDashboard, BedDouble, Users, Wrench, GitBranch,
   AlertTriangle, FlaskConical, FileBarChart, Settings, Activity,
   Database, Terminal, Brain, Eye, Lightbulb, MapPin,
+  HeartPulse, Navigation,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -12,9 +13,12 @@ import {
 
 const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Capacity Intelligence", url: "/dashboard/capacity", icon: BedDouble },
-  { title: "Workforce Intelligence", url: "/dashboard/workforce", icon: Users },
-  { title: "Equipment Intelligence", url: "/dashboard/equipment", icon: Wrench },
+  { title: "Capacity Command", url: "/dashboard/capacity", icon: Activity },
+  { title: "Bed Allocation", url: "/dashboard/bed-allocation", icon: BedDouble },
+  { title: "ICU Operations", url: "/dashboard/icu-operations", icon: HeartPulse },
+  { title: "Resource Routing", url: "/dashboard/resource-routing", icon: Navigation },
+  { title: "Workforce", url: "/dashboard/workforce", icon: Users },
+  { title: "Equipment", url: "/dashboard/equipment", icon: Wrench },
   { title: "Patient Flow", url: "/dashboard/patient-flow", icon: GitBranch },
   { title: "Emergency Mode", url: "/dashboard/emergency", icon: AlertTriangle },
   { title: "Simulation Lab", url: "/dashboard/simulation", icon: FlaskConical },

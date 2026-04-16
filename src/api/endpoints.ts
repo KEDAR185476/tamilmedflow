@@ -31,6 +31,15 @@ export const API_ENDPOINTS = {
     run: "/api/v1/simulation/run",
     scenarios: "/api/v1/simulation/scenarios",
   },
+  // Part 4: Capacity Operations
+  capacityOps: {
+    overview: "/api/v1/capacity/overview",
+    districts: "/api/v1/capacity/districts",
+    bedsAvailable: "/api/v1/beds/available",
+    icuStatus: "/api/v1/icu/status",
+    routingRecommendations: "/api/v1/routing/recommendations",
+    admissionQueue: "/api/v1/capacity/admission-queue",
+  },
   // Part 3: AI Intelligence Layer
   forecast: {
     admissions: "/api/v1/forecast/admissions",
