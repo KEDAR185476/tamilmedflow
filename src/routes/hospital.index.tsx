@@ -1,213 +1,289 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { GlassCard } from "@/components/layout/GlassCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  Hospital, BedDouble, Users, Wrench, Activity, ArrowRight, CheckCircle,
-  Building2, MapPin, Phone, Mail, Globe, Plus,
+  Hospital, BedDouble, Users, Wrench, Activity, CheckCircle,
+  Building2, MapPin, Phone, Mail, HeartPulse, Clock, Shield,
+  UserPlus, Trash2, Edit2, Eye, Lock,
 } from "lucide-react";
+import {
+  getHospitalAuth, ROLE_LABELS, type HospitalRole, ROLE_PERMISSIONS,
+  type HospitalUser, clearHospitalAuth,
+} from "@/lib/hospitalAuth";
 
 export const Route = createFileRoute("/hospital/")({
   component: HospitalHome,
 });
 
 function HospitalHome() {
-  const [step, setStep] = useState<"welcome" | "setup" | "dashboard">("welcome");
-  const [hospitalName, setHospitalName] = useState("");
-  const [beds, setBeds] = useState("200");
-  const [city, setCity] = useState("Chennai");
-  const [setupDone, setSetupDone] = useState(false);
+  const auth = getHospitalAuth();
+  const [tab, setTab] = useState<"dashboard" | "users" | "audit">("dashboard");
 
-  if (step === "welcome" && !setupDone) {
+  const [staffUsers] = useState<Array<{ id: string; name: string; email: string; role: HospitalRole; active: boolean }>>([
+    { id: "1", name: "Dr. Priya Sharma", email: "priya@hospital.org", role: "doctor", active: true },
+    { id: "2", name: "Nurse Lakshmi K.", email: "lakshmi@hospital.org", role: "nurse_supervisor", active: true },
+    { id: "3", name: "Rajesh M.", email: "rajesh@hospital.org", role: "operations_manager", active: true },
+    { id: "4", name: "Anitha V.", email: "anitha@hospital.org", role: "equipment_manager", active: true },
+    { id: "5", name: "Dr. Karthik R.", email: "karthik@hospital.org", role: "emergency_coordinator", active: true },
+    { id: "6", name: "Meena S.", email: "meena@hospital.org", role: "analyst_viewer", active: false },
+  ]);
+
+  // If not logged in, show gateway
+  if (!auth) {
     return (
-      <div className="max-w-3xl mx-auto py-12 animate-slide-up">
+      <div className="max-w-3xl mx-auto py-16 animate-slide-up">
         <div className="text-center mb-10">
-          <div className="h-16 w-16 rounded-2xl bg-chart-2/15 flex items-center justify-center mx-auto mb-5">
+          <div className="h-16 w-16 rounded-2xl bg-chart-2/15 flex items-center justify-center mx-auto mb-5" style={{ boxShadow: "0 0 30px oklch(0.70 0.12 160 / 30%)" }}>
             <Hospital className="h-8 w-8 text-chart-2" />
           </div>
-          <h1 className="text-3xl font-black text-foreground mb-3">Welcome to My Hospital</h1>
-          <p className="text-muted-foreground">Set up your personalized hospital intelligence platform in minutes.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          {[
-            { icon: Building2, title: "Configure Hospital", desc: "Enter your hospital details, bed capacity, and departments" },
-            { icon: Users, title: "Connect Staff Data", desc: "Import or configure your workforce roster and schedules" },
-            { icon: Activity, title: "Go Live", desc: "Start tracking operations with AI-powered intelligence" },
-          ].map((s, i) => (
-            <GlassCard key={s.title} className="p-5 text-center">
-              <div className="h-10 w-10 rounded-xl bg-chart-2/10 flex items-center justify-center mx-auto mb-3">
-                <s.icon className="h-5 w-5 text-chart-2" />
-              </div>
-              <div className="text-xs text-chart-2 font-medium mb-2">Step {i + 1}</div>
-              <h3 className="text-sm font-semibold text-foreground mb-1">{s.title}</h3>
-              <p className="text-xs text-muted-foreground">{s.desc}</p>
-            </GlassCard>
-          ))}
-        </div>
-
-        <div className="text-center">
-          <button onClick={() => setStep("setup")}
-            className="inline-flex items-center gap-2 bg-chart-2 text-primary-foreground px-6 py-3 rounded-xl font-semibold hover:shadow-[0_0_30px_oklch(0.70_0.12_160/40%)] transition-all">
-            <Plus className="h-4 w-4" /> Set Up My Hospital
-          </button>
+          <h1 className="text-3xl font-black text-foreground mb-3">My Hospital</h1>
+          <p className="text-muted-foreground mb-8">Private hospital intelligence platform. Sign in or create your workspace.</p>
+          <div className="flex items-center justify-center gap-4">
+            <Link to="/hospital/login" className="inline-flex items-center gap-2 bg-chart-2 text-primary-foreground px-6 py-3 rounded-xl font-semibold hover:shadow-[0_0_30px_oklch(0.70_0.12_160/40%)] transition-all">
+              <Lock className="h-4 w-4" /> Sign In
+            </Link>
+            <Link to="/hospital/signup" className="inline-flex items-center gap-2 border border-chart-2/30 text-chart-2 px-6 py-3 rounded-xl font-semibold hover:bg-chart-2/10 transition-all">
+              <UserPlus className="h-4 w-4" /> Create Workspace
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
-  if (step === "setup" && !setupDone) {
-    return (
-      <div className="max-w-xl mx-auto py-12 animate-slide-up">
-        <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-          <Building2 className="h-6 w-6 text-chart-2" /> Hospital Setup
-        </h2>
-        <GlassCard className="p-6 space-y-5">
-          <div>
-            <label className="text-xs text-muted-foreground mb-1 block">Hospital Name</label>
-            <input type="text" value={hospitalName} onChange={e => setHospitalName(e.target.value)}
-              placeholder="e.g., Apollo Hospital Chennai" className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-chart-2 transition-colors" />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-muted-foreground mb-1 block">City / District</label>
-              <input type="text" value={city} onChange={e => setCity(e.target.value)}
-                className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm text-foreground outline-none focus:border-chart-2 transition-colors" />
-            </div>
-            <div>
-              <label className="text-xs text-muted-foreground mb-1 block">Total Beds</label>
-              <input type="number" value={beds} onChange={e => setBeds(e.target.value)}
-                className="w-full bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm text-foreground outline-none focus:border-chart-2 transition-colors" />
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3">
-            {["General Ward", "ICU", "Emergency", "Pediatrics", "Maternity", "Surgery"].map(dept => (
-              <label key={dept} className="flex items-center gap-2 text-xs text-foreground cursor-pointer">
-                <input type="checkbox" defaultChecked className="accent-chart-2" /> {dept}
-              </label>
-            ))}
-          </div>
-          <button onClick={() => { setSetupDone(true); setStep("dashboard"); }}
-            className="w-full bg-chart-2 text-primary-foreground py-2.5 rounded-lg font-semibold hover:shadow-[0_0_30px_oklch(0.70_0.12_160/40%)] transition-all flex items-center justify-center gap-2">
-            <CheckCircle className="h-4 w-4" /> Complete Setup &amp; Launch
-          </button>
-        </GlassCard>
-      </div>
-    );
-  }
-
-  // Dashboard view after setup
-  const name = hospitalName || "My Hospital";
-  const bedCount = parseInt(beds) || 200;
+  const { tenant, user, onboarding } = auth;
+  const bedCount = onboarding?.totalBeds || tenant.beds || 200;
   const occupied = Math.round(bedCount * 0.76);
+
+
+
+  const auditLog = [
+    { time: "2 min ago", user: user.name, action: "Logged in", detail: "Session started" },
+    { time: "1 hr ago", user: "Dr. Priya", action: "Patient admitted", detail: "ICU Ward B" },
+    { time: "3 hr ago", user: "Rajesh M.", action: "Bed count updated", detail: "Ward A +5 beds" },
+    { time: "5 hr ago", user: "System", action: "Emergency mode activated", detail: "Auto-triggered" },
+    { time: "8 hr ago", user: "Anitha V.", action: "Equipment maintenance", detail: "Ventilator #7 serviced" },
+    { time: "12 hr ago", user: user.name, action: "Staff roster updated", detail: "Night shift adjusted" },
+    { time: "1 day ago", user: "System", action: "Report exported", detail: "Monthly occupancy PDF" },
+  ];
 
   return (
     <div className="space-y-6 animate-slide-up">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Hospital className="h-6 w-6 text-chart-2" />
-          {name}
-        </h1>
-        <p className="text-sm text-muted-foreground">{city} — Personalized Hospital Intelligence</p>
+      {/* Header with hospital name and user info */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Hospital className="h-6 w-6 text-chart-2" />
+            {tenant.name || "My Hospital"}
+          </h1>
+          <p className="text-sm text-muted-foreground flex items-center gap-2">
+            {tenant.city && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {tenant.city}</span>}
+            <span className="text-chart-2">•</span>
+            <span className="flex items-center gap-1"><Shield className="h-3 w-3" /> {ROLE_LABELS[user.role]}</span>
+            <span className="text-chart-2">•</span>
+            <span className="text-[10px] text-muted-foreground/60">Tenant: {tenant.id}</span>
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/30 rounded-lg px-3 py-1.5 border border-border">
+            <Clock className="h-3 w-3" />
+            {new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}
+          </div>
+          <button onClick={() => { clearHospitalAuth(); window.location.reload(); }}
+            className="text-xs text-destructive/70 hover:text-destructive px-3 py-1.5 rounded-lg border border-destructive/20 hover:bg-destructive/10 transition-colors">
+            Sign Out
+          </button>
+        </div>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { icon: BedDouble, label: "Total Beds", value: bedCount.toString(), sub: `${occupied} occupied` },
-          { icon: Activity, label: "Occupancy", value: `${Math.round((occupied / bedCount) * 100)}%`, sub: "Target: < 85%" },
-          { icon: Users, label: "Staff On Duty", value: Math.round(bedCount * 0.4).toString(), sub: "All shifts" },
-          { icon: Wrench, label: "Equipment Ready", value: "94%", sub: "2 maintenance pending" },
-        ].map(k => (
-          <GlassCard key={k.label} className="p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <k.icon className="h-4 w-4 text-chart-2" />
-              <span className="text-xs text-muted-foreground">{k.label}</span>
-            </div>
-            <p className="text-2xl font-bold text-foreground">{k.value}</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">{k.sub}</p>
-          </GlassCard>
+      {/* Tabs */}
+      <div className="flex gap-1 bg-muted/30 rounded-lg p-0.5 w-fit">
+        {(["dashboard", "users", "audit"] as const).map(t => (
+          <button key={t} onClick={() => setTab(t)}
+            className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${tab === t ? "bg-chart-2 text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            {t === "dashboard" ? "Dashboard" : t === "users" ? "Users & Roles" : "Audit Log"}
+          </button>
         ))}
       </div>
 
-      {/* Quick modules */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <GlassCard className="p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <BedDouble className="h-4 w-4 text-chart-2" /> Ward Overview
-          </h3>
-          <div className="space-y-2">
-            {["General Ward", "ICU", "Emergency", "Pediatrics", "Maternity", "Surgery"].map((ward, i) => {
-              const wardBeds = Math.round(bedCount / 6);
-              const wardOcc = Math.round(wardBeds * (0.6 + i * 0.06));
-              const pct = Math.round((wardOcc / wardBeds) * 100);
-              return (
-                <div key={ward} className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">{ward}</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 h-1.5 rounded-full bg-muted overflow-hidden">
-                      <div className={`h-full rounded-full ${pct > 85 ? "bg-destructive" : pct > 70 ? "bg-warning" : "bg-success"}`} style={{ width: `${pct}%` }} />
+      {tab === "dashboard" && (
+        <>
+          {/* KPIs */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { icon: BedDouble, label: "Total Beds", value: bedCount.toString(), sub: `${occupied} occupied` },
+              { icon: Activity, label: "Occupancy", value: `${Math.round((occupied / bedCount) * 100)}%`, sub: "Target: < 85%" },
+              { icon: Users, label: "Staff On Duty", value: (onboarding?.doctors || 30).toString(), sub: `${onboarding?.nurses || 80} nurses` },
+              { icon: Wrench, label: "Equipment Ready", value: "94%", sub: `${onboarding?.ventilators || 15} ventilators` },
+            ].map(k => (
+              <GlassCard key={k.label} className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <k.icon className="h-4 w-4 text-chart-2" />
+                  <span className="text-xs text-muted-foreground">{k.label}</span>
+                </div>
+                <p className="text-2xl font-bold text-foreground">{k.value}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">{k.sub}</p>
+              </GlassCard>
+            ))}
+          </div>
+
+          {/* Wards + Staff + Activity */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <GlassCard className="p-5">
+              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <BedDouble className="h-4 w-4 text-chart-2" /> Ward Overview
+              </h3>
+              <div className="space-y-2">
+                {["General Ward", "ICU", "Emergency", "Pediatrics", "Maternity", "Surgery"].map((ward, i) => {
+                  const wardBeds = Math.round(bedCount / 6);
+                  const pct = Math.min(98, Math.round(60 + i * 6));
+                  return (
+                    <div key={ward} className="flex items-center justify-between text-xs">
+                      <span className="text-muted-foreground">{ward}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 h-1.5 rounded-full bg-muted overflow-hidden">
+                          <div className={`h-full rounded-full ${pct > 85 ? "bg-destructive" : pct > 70 ? "bg-chart-4" : "bg-chart-2"}`} style={{ width: `${pct}%` }} />
+                        </div>
+                        <span className="text-foreground w-8 text-right">{pct}%</span>
+                      </div>
                     </div>
-                    <span className="text-foreground w-8 text-right">{pct}%</span>
+                  );
+                })}
+              </div>
+            </GlassCard>
+
+            <GlassCard className="p-5">
+              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Users className="h-4 w-4 text-chart-2" /> Staff Summary
+              </h3>
+              <div className="space-y-2 text-xs">
+                {[
+                  { role: "Doctors", count: onboarding?.doctors || 30, status: "Available" },
+                  { role: "Nurses", count: onboarding?.nurses || 80, status: "On Duty" },
+                  { role: "Specialists", count: onboarding?.specialists || 12, status: "Available" },
+                  { role: "Technicians", count: Math.round((onboarding?.doctors || 30) * 0.5), status: "On Call" },
+                ].map(s => (
+                  <div key={s.role} className="flex items-center justify-between">
+                    <span className="text-muted-foreground">{s.role}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-foreground font-medium">{s.count}</span>
+                      <span className="text-chart-2 text-[10px]">{s.status}</span>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </GlassCard>
-
-        <GlassCard className="p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <Users className="h-4 w-4 text-chart-2" /> Staff Summary
-          </h3>
-          <div className="space-y-2 text-xs">
-            {[
-              { role: "Doctors", count: Math.round(bedCount * 0.08), status: "Available" },
-              { role: "Nurses", count: Math.round(bedCount * 0.25), status: "On Duty" },
-              { role: "Specialists", count: Math.round(bedCount * 0.03), status: "Available" },
-              { role: "Technicians", count: Math.round(bedCount * 0.04), status: "On Call" },
-            ].map(s => (
-              <div key={s.role} className="flex items-center justify-between">
-                <span className="text-muted-foreground">{s.role}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-foreground font-medium">{s.count}</span>
-                  <span className="text-success text-[10px]">{s.status}</span>
-                </div>
+                ))}
               </div>
+            </GlassCard>
+
+            <GlassCard className="p-5">
+              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Activity className="h-4 w-4 text-chart-2" /> Recent Activity
+              </h3>
+              <div className="space-y-2 text-xs">
+                {auditLog.slice(0, 5).map((a, i) => (
+                  <div key={i} className="flex gap-2">
+                    <span className="text-muted-foreground/50 w-16 shrink-0">{a.time}</span>
+                    <span className="text-muted-foreground">{a.action}</span>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
+          </div>
+
+          {/* Hospital info bar */}
+          <GlassCard className="p-4">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1"><MapPin className="h-3 w-3 text-chart-2" /> {tenant.city || "Chennai"}, {tenant.state}</span>
+              <span className="flex items-center gap-1"><BedDouble className="h-3 w-3 text-chart-2" /> {bedCount} beds</span>
+              <span className="flex items-center gap-1"><Phone className="h-3 w-3 text-chart-2" /> {tenant.phone || "044-XXXX-XXXX"}</span>
+              <span className="flex items-center gap-1"><Mail className="h-3 w-3 text-chart-2" /> {tenant.email}</span>
+              <span className="ml-auto text-[10px] text-muted-foreground/50 flex items-center gap-1"><Shield className="h-3 w-3" /> Isolated tenant workspace</span>
+            </div>
+          </GlassCard>
+        </>
+      )}
+
+      {tab === "users" && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-foreground">Staff Users</h2>
+            <button className="inline-flex items-center gap-1.5 bg-chart-2 text-primary-foreground px-4 py-2 rounded-lg text-xs font-medium hover:shadow-[0_0_20px_oklch(0.70_0.12_160/30%)] transition-all">
+              <UserPlus className="h-3.5 w-3.5" /> Invite Staff
+            </button>
+          </div>
+          <GlassCard className="p-0 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-xs text-muted-foreground">
+                  <th className="text-left p-3 font-medium">Name</th>
+                  <th className="text-left p-3 font-medium">Email</th>
+                  <th className="text-left p-3 font-medium">Role</th>
+                  <th className="text-left p-3 font-medium">Status</th>
+                  <th className="text-right p-3 font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {staffUsers.map(u => (
+                  <tr key={u.id} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
+                    <td className="p-3 text-foreground font-medium">{u.name}</td>
+                    <td className="p-3 text-muted-foreground">{u.email}</td>
+                    <td className="p-3"><span className="px-2 py-0.5 rounded-full bg-chart-2/10 text-chart-2 text-[10px] font-medium">{ROLE_LABELS[u.role]}</span></td>
+                    <td className="p-3"><span className={`text-[10px] font-medium ${u.active ? "text-chart-2" : "text-muted-foreground"}`}>{u.active ? "Active" : "Disabled"}</span></td>
+                    <td className="p-3 text-right">
+                      <div className="flex items-center justify-end gap-1">
+                        <button className="p-1.5 rounded hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"><Edit2 className="h-3 w-3" /></button>
+                        <button className="p-1.5 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"><Trash2 className="h-3 w-3" /></button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </GlassCard>
+
+          {/* Role permissions grid */}
+          <h3 className="text-sm font-semibold text-foreground mt-6">Role Permissions</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {(Object.entries(ROLE_LABELS) as [HospitalRole, string][]).map(([role, label]) => (
+              <GlassCard key={role} className="p-3">
+                <h4 className="text-xs font-semibold text-chart-2 mb-1.5">{label}</h4>
+                <div className="flex flex-wrap gap-1">
+                  {ROLE_PERMISSIONS[role].map(p => (
+                    <span key={p} className="px-2 py-0.5 rounded bg-muted/50 text-[10px] text-muted-foreground">{p === "*" ? "Full Access" : p}</span>
+                  ))}
+                </div>
+              </GlassCard>
             ))}
           </div>
-        </GlassCard>
-
-        <GlassCard className="p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <Activity className="h-4 w-4 text-chart-2" /> Recent Activity
-          </h3>
-          <div className="space-y-2 text-xs">
-            {[
-              { time: "2 min ago", event: "Patient admitted to ICU" },
-              { time: "15 min ago", event: "Discharge completed (Ward B)" },
-              { time: "32 min ago", event: "Equipment maintenance alert" },
-              { time: "1 hr ago", event: "Staff shift handover" },
-              { time: "2 hr ago", event: "Bed reassignment completed" },
-            ].map((a, i) => (
-              <div key={i} className="flex gap-2">
-                <span className="text-muted-foreground/50 w-16 shrink-0">{a.time}</span>
-                <span className="text-muted-foreground">{a.event}</span>
-              </div>
-            ))}
-          </div>
-        </GlassCard>
-      </div>
-
-      {/* Hospital info */}
-      <GlassCard className="p-4">
-        <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1"><MapPin className="h-3 w-3 text-chart-2" /> {city}, Tamil Nadu</span>
-          <span className="flex items-center gap-1"><BedDouble className="h-3 w-3 text-chart-2" /> {bedCount} beds</span>
-          <span className="flex items-center gap-1"><Phone className="h-3 w-3 text-chart-2" /> 044-XXXX-XXXX</span>
-          <span className="flex items-center gap-1"><Mail className="h-3 w-3 text-chart-2" /> admin@{name.toLowerCase().replace(/\s+/g, "")}.org</span>
-          <span className="ml-auto text-[10px] text-muted-foreground/50">Data: Local hospital configuration • Not connected to external feeds</span>
         </div>
-      </GlassCard>
+      )}
+
+      {tab === "audit" && (
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold text-foreground flex items-center gap-2"><Shield className="h-5 w-5 text-chart-2" /> Audit Log</h2>
+          <GlassCard className="p-0 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-xs text-muted-foreground">
+                  <th className="text-left p-3 font-medium">Time</th>
+                  <th className="text-left p-3 font-medium">User</th>
+                  <th className="text-left p-3 font-medium">Action</th>
+                  <th className="text-left p-3 font-medium">Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {auditLog.map((a, i) => (
+                  <tr key={i} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
+                    <td className="p-3 text-muted-foreground/60 text-xs">{a.time}</td>
+                    <td className="p-3 text-foreground">{a.user}</td>
+                    <td className="p-3"><span className="px-2 py-0.5 rounded bg-chart-2/10 text-chart-2 text-[10px]">{a.action}</span></td>
+                    <td className="p-3 text-muted-foreground">{a.detail}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </GlassCard>
+        </div>
+      )}
     </div>
   );
 }
