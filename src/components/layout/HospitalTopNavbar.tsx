@@ -7,6 +7,7 @@ import {
   Database, HeartPulse, Settings, History, Users,
 } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { LatencyMonitor } from "@/components/layout/LatencyMonitor";
 import { cn } from "@/lib/utils";
 
 type SearchEntry = { label: string; hint: string; url: string; icon: React.ComponentType<{ className?: string }>; keywords: string };
@@ -195,6 +196,8 @@ export function HospitalTopNavbar() {
             </div>
           )}
         </div>
+
+        <LatencyMonitor />
 
         <button className="relative p-1.5 rounded-md hover:bg-accent transition-colors" aria-label="Notifications">
           <Bell className="h-3.5 w-3.5 text-muted-foreground" />
