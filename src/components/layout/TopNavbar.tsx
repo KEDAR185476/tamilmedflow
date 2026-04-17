@@ -2,6 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { Bell, Search, User, Globe, Hospital } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { DistrictSelector } from "@/components/dashboard/DistrictSelector";
+import { LatencyMonitor } from "@/components/layout/LatencyMonitor";
 
 export function TopNavbar() {
   const location = useLocation();
@@ -30,6 +31,7 @@ export function TopNavbar() {
         </div>
       </div>
       <div className="flex items-center gap-2">
+        <LatencyMonitor />
         <button className="relative p-1.5 rounded-md hover:bg-accent transition-colors">
           <Bell className="h-3.5 w-3.5 text-muted-foreground" />
           <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-destructive" />
