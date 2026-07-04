@@ -33,6 +33,7 @@ import { Route as HospitalResourcesRouteImport } from './routes/hospital.resourc
 import { Route as HospitalReportsRouteImport } from './routes/hospital.reports'
 import { Route as HospitalPatientsRouteImport } from './routes/hospital.patients'
 import { Route as HospitalOnboardingRouteImport } from './routes/hospital.onboarding'
+import { Route as HospitalMedicineRouteImport } from './routes/hospital.medicine'
 import { Route as HospitalLoginRouteImport } from './routes/hospital.login'
 import { Route as HospitalLearningRouteImport } from './routes/hospital.learning'
 import { Route as HospitalInsuranceSourcesRouteImport } from './routes/hospital.insurance-sources'
@@ -187,6 +188,11 @@ const HospitalPatientsRoute = HospitalPatientsRouteImport.update({
 const HospitalOnboardingRoute = HospitalOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalMedicineRoute = HospitalMedicineRouteImport.update({
+  id: '/medicine',
+  path: '/medicine',
   getParentRoute: () => HospitalRoute,
 } as any)
 const HospitalLoginRoute = HospitalLoginRouteImport.update({
@@ -419,6 +425,7 @@ export interface FileRoutesByFullPath {
   '/hospital/insurance-sources': typeof HospitalInsuranceSourcesRoute
   '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
+  '/hospital/medicine': typeof HospitalMedicineRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
@@ -478,6 +485,7 @@ export interface FileRoutesByTo {
   '/hospital/insurance-sources': typeof HospitalInsuranceSourcesRoute
   '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
+  '/hospital/medicine': typeof HospitalMedicineRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
@@ -540,6 +548,7 @@ export interface FileRoutesById {
   '/hospital/insurance-sources': typeof HospitalInsuranceSourcesRoute
   '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
+  '/hospital/medicine': typeof HospitalMedicineRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
@@ -603,6 +612,7 @@ export interface FileRouteTypes {
     | '/hospital/insurance-sources'
     | '/hospital/learning'
     | '/hospital/login'
+    | '/hospital/medicine'
     | '/hospital/onboarding'
     | '/hospital/patients'
     | '/hospital/reports'
@@ -662,6 +672,7 @@ export interface FileRouteTypes {
     | '/hospital/insurance-sources'
     | '/hospital/learning'
     | '/hospital/login'
+    | '/hospital/medicine'
     | '/hospital/onboarding'
     | '/hospital/patients'
     | '/hospital/reports'
@@ -723,6 +734,7 @@ export interface FileRouteTypes {
     | '/hospital/insurance-sources'
     | '/hospital/learning'
     | '/hospital/login'
+    | '/hospital/medicine'
     | '/hospital/onboarding'
     | '/hospital/patients'
     | '/hospital/reports'
@@ -920,6 +932,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/hospital/onboarding'
       preLoaderRoute: typeof HospitalOnboardingRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/medicine': {
+      id: '/hospital/medicine'
+      path: '/medicine'
+      fullPath: '/hospital/medicine'
+      preLoaderRoute: typeof HospitalMedicineRouteImport
       parentRoute: typeof HospitalRoute
     }
     '/hospital/login': {
@@ -1240,6 +1259,7 @@ interface HospitalRouteChildren {
   HospitalInsuranceSourcesRoute: typeof HospitalInsuranceSourcesRoute
   HospitalLearningRoute: typeof HospitalLearningRoute
   HospitalLoginRoute: typeof HospitalLoginRoute
+  HospitalMedicineRoute: typeof HospitalMedicineRoute
   HospitalOnboardingRoute: typeof HospitalOnboardingRoute
   HospitalPatientsRoute: typeof HospitalPatientsRoute
   HospitalReportsRoute: typeof HospitalReportsRoute
@@ -1266,6 +1286,7 @@ const HospitalRouteChildren: HospitalRouteChildren = {
   HospitalInsuranceSourcesRoute: HospitalInsuranceSourcesRoute,
   HospitalLearningRoute: HospitalLearningRoute,
   HospitalLoginRoute: HospitalLoginRoute,
+  HospitalMedicineRoute: HospitalMedicineRoute,
   HospitalOnboardingRoute: HospitalOnboardingRoute,
   HospitalPatientsRoute: HospitalPatientsRoute,
   HospitalReportsRoute: HospitalReportsRoute,
