@@ -95,6 +95,8 @@ const SCENARIOS = [
     summary: "23 idle assets identified across 4 wards. ₹18L purchase avoidance modelled this quarter." },
   { id: "single", label: "Single Hospital Turnaround", icon: Hospital, color: "text-emerald-400",
     summary: "MedFlow General: 30-day occupancy gain +18%, wait time -27%, efficiency score 87/100." },
+  { id: "medicine", label: "Dengue Outbreak Medicine Surge", icon: Sparkles, color: "text-fuchsia-400",
+    summary: "Sudden dengue outbreak spikes Paracetamol & ORS demand +140%. AI predicts shortage 48h ahead, auto-generates reorder, and redistributes stock from DH Vellore → CHC Chennai — averting stock-out." },
 ];
 
 const FAQ = [
