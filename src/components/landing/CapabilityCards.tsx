@@ -1,4 +1,4 @@
-import { Brain, BedDouble, Users, Zap, Shield, BarChart3 } from "lucide-react";
+import { Brain, BedDouble, Users, Zap, Shield, BarChart3, Pill } from "lucide-react";
 
 const capabilities = [
   {
@@ -30,6 +30,11 @@ const capabilities = [
     icon: BarChart3,
     title: "Transparent Data Pipeline",
     desc: "Every prediction shows its training data source, model architecture, confidence intervals, and API endpoint — no black boxes.",
+  },
+  {
+    icon: Pill,
+    title: "Medicine Intelligence",
+    desc: "AI-powered monitoring and forecasting of medicine inventory across PHCs and CHCs to prevent shortages and improve healthcare delivery.",
   },
 ];
 
