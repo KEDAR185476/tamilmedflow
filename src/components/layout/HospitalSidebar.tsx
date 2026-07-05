@@ -4,7 +4,7 @@ import {
   LayoutDashboard, BedDouble, Users, Wrench, Activity, Stethoscope,
   HeartPulse, BarChart3, Settings, Hospital, FileBarChart, AlertTriangle,
   Database, Zap, History, Brain, Boxes, Sparkles, Award, Shield,
-  ChevronRight, Gauge, Workflow, Siren, Cog, TrendingUp, Pill,
+  ChevronRight, Gauge, Workflow, Siren, Cog, TrendingUp, Pill, Map as MapIcon,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
