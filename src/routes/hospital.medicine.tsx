@@ -107,12 +107,20 @@ function MedicineIntelligence() {
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">Real-time AI inventory monitoring across PHCs, CHCs & District Hospitals</p>
         </div>
-        <button
-          onClick={() => { setOutbreak(v => !v); toast(outbreak ? "Normal demand restored" : "Dengue outbreak simulated — demand surging"); }}
-          className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${outbreak ? "bg-destructive/15 border-destructive/40 text-destructive" : "bg-muted/20 border-border/50 text-muted-foreground hover:text-foreground"}`}
-        >
-          {outbreak ? "● Outbreak Mode Active" : "Simulate Dengue Outbreak"}
-        </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <Link
+            to="/hospital/medicine-supply"
+            className="text-xs px-3 py-1.5 rounded-lg border border-chart-2/40 bg-chart-2/10 text-chart-2 hover:bg-chart-2/20 transition-all flex items-center gap-1.5"
+          >
+            <MapIcon className="h-3.5 w-3.5" /> Supply Chain Map
+          </Link>
+          <button
+            onClick={() => { setOutbreak(v => !v); toast(outbreak ? "Normal demand restored" : "Dengue outbreak simulated — demand surging"); }}
+            className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${outbreak ? "bg-destructive/15 border-destructive/40 text-destructive" : "bg-muted/20 border-border/50 text-muted-foreground hover:text-foreground"}`}
+          >
+            {outbreak ? "● Outbreak Mode Active" : "Simulate Dengue Outbreak"}
+          </button>
+        </div>
       </div>
 
       {/* KPI cards */}
