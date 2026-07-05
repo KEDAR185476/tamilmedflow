@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
   Pill, AlertTriangle, TrendingUp, Clock, Package, Activity,
-  ArrowRight, CheckCircle, Truck, Sparkles, Calendar, Shield,
+  ArrowRight, CheckCircle, Truck, Sparkles, Calendar, Shield, Map as MapIcon,
 } from "lucide-react";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { toast } from "sonner";
