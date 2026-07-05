@@ -4,7 +4,7 @@ import {
   LayoutDashboard, BedDouble, Users, Wrench, Activity, Stethoscope,
   HeartPulse, BarChart3, Settings, Hospital, FileBarChart, AlertTriangle,
   Database, Zap, History, Brain, Boxes, Sparkles, Award, Shield,
-  ChevronRight, Gauge, Workflow, Siren, Cog, TrendingUp, Pill,
+  ChevronRight, Gauge, Workflow, Siren, Cog, TrendingUp, Pill, Map as MapIcon,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
@@ -41,6 +41,7 @@ const CATEGORIES: NavCategory[] = [
       { title: "Workforce Management", url: "/hospital/staff", icon: Users },
       { title: "Equipment Control", url: "/hospital/equipment", icon: Wrench },
       { title: "Medicine Intelligence", url: "/hospital/medicine", icon: Pill },
+      { title: "Supply Chain Map", url: "/hospital/medicine-supply", icon: MapIcon },
       { title: "Resource Optimizer", url: "/hospital/resources", icon: Boxes },
       { title: "Automation Engine", url: "/hospital/automation", icon: Zap },
     ],
