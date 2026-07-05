@@ -33,6 +33,7 @@ import { Route as HospitalResourcesRouteImport } from './routes/hospital.resourc
 import { Route as HospitalReportsRouteImport } from './routes/hospital.reports'
 import { Route as HospitalPatientsRouteImport } from './routes/hospital.patients'
 import { Route as HospitalOnboardingRouteImport } from './routes/hospital.onboarding'
+import { Route as HospitalMedicineSupplyRouteImport } from './routes/hospital.medicine-supply'
 import { Route as HospitalMedicineRouteImport } from './routes/hospital.medicine'
 import { Route as HospitalLoginRouteImport } from './routes/hospital.login'
 import { Route as HospitalLearningRouteImport } from './routes/hospital.learning'
@@ -188,6 +189,11 @@ const HospitalPatientsRoute = HospitalPatientsRouteImport.update({
 const HospitalOnboardingRoute = HospitalOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => HospitalRoute,
+} as any)
+const HospitalMedicineSupplyRoute = HospitalMedicineSupplyRouteImport.update({
+  id: '/medicine-supply',
+  path: '/medicine-supply',
   getParentRoute: () => HospitalRoute,
 } as any)
 const HospitalMedicineRoute = HospitalMedicineRouteImport.update({
@@ -426,6 +432,7 @@ export interface FileRoutesByFullPath {
   '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
   '/hospital/medicine': typeof HospitalMedicineRoute
+  '/hospital/medicine-supply': typeof HospitalMedicineSupplyRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
@@ -486,6 +493,7 @@ export interface FileRoutesByTo {
   '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
   '/hospital/medicine': typeof HospitalMedicineRoute
+  '/hospital/medicine-supply': typeof HospitalMedicineSupplyRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
@@ -549,6 +557,7 @@ export interface FileRoutesById {
   '/hospital/learning': typeof HospitalLearningRoute
   '/hospital/login': typeof HospitalLoginRoute
   '/hospital/medicine': typeof HospitalMedicineRoute
+  '/hospital/medicine-supply': typeof HospitalMedicineSupplyRoute
   '/hospital/onboarding': typeof HospitalOnboardingRoute
   '/hospital/patients': typeof HospitalPatientsRoute
   '/hospital/reports': typeof HospitalReportsRoute
@@ -613,6 +622,7 @@ export interface FileRouteTypes {
     | '/hospital/learning'
     | '/hospital/login'
     | '/hospital/medicine'
+    | '/hospital/medicine-supply'
     | '/hospital/onboarding'
     | '/hospital/patients'
     | '/hospital/reports'
@@ -673,6 +683,7 @@ export interface FileRouteTypes {
     | '/hospital/learning'
     | '/hospital/login'
     | '/hospital/medicine'
+    | '/hospital/medicine-supply'
     | '/hospital/onboarding'
     | '/hospital/patients'
     | '/hospital/reports'
@@ -735,6 +746,7 @@ export interface FileRouteTypes {
     | '/hospital/learning'
     | '/hospital/login'
     | '/hospital/medicine'
+    | '/hospital/medicine-supply'
     | '/hospital/onboarding'
     | '/hospital/patients'
     | '/hospital/reports'
@@ -932,6 +944,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/hospital/onboarding'
       preLoaderRoute: typeof HospitalOnboardingRouteImport
+      parentRoute: typeof HospitalRoute
+    }
+    '/hospital/medicine-supply': {
+      id: '/hospital/medicine-supply'
+      path: '/medicine-supply'
+      fullPath: '/hospital/medicine-supply'
+      preLoaderRoute: typeof HospitalMedicineSupplyRouteImport
       parentRoute: typeof HospitalRoute
     }
     '/hospital/medicine': {
@@ -1260,6 +1279,7 @@ interface HospitalRouteChildren {
   HospitalLearningRoute: typeof HospitalLearningRoute
   HospitalLoginRoute: typeof HospitalLoginRoute
   HospitalMedicineRoute: typeof HospitalMedicineRoute
+  HospitalMedicineSupplyRoute: typeof HospitalMedicineSupplyRoute
   HospitalOnboardingRoute: typeof HospitalOnboardingRoute
   HospitalPatientsRoute: typeof HospitalPatientsRoute
   HospitalReportsRoute: typeof HospitalReportsRoute
@@ -1287,6 +1307,7 @@ const HospitalRouteChildren: HospitalRouteChildren = {
   HospitalLearningRoute: HospitalLearningRoute,
   HospitalLoginRoute: HospitalLoginRoute,
   HospitalMedicineRoute: HospitalMedicineRoute,
+  HospitalMedicineSupplyRoute: HospitalMedicineSupplyRoute,
   HospitalOnboardingRoute: HospitalOnboardingRoute,
   HospitalPatientsRoute: HospitalPatientsRoute,
   HospitalReportsRoute: HospitalReportsRoute,
@@ -1321,12 +1342,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

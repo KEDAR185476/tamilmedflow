@@ -41,6 +41,7 @@ const CATEGORIES: NavCategory[] = [
       { title: "Workforce Management", url: "/hospital/staff", icon: Users },
       { title: "Equipment Control", url: "/hospital/equipment", icon: Wrench },
       { title: "Medicine Intelligence", url: "/hospital/medicine", icon: Pill },
+      { title: "Supply Chain Map", url: "/hospital/medicine-supply", icon: MapIcon },
       { title: "Resource Optimizer", url: "/hospital/resources", icon: Boxes },
       { title: "Automation Engine", url: "/hospital/automation", icon: Zap },
     ],
