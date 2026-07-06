@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as JudgeModeRouteImport } from './routes/judge-mode'
+import { Route as JudgeMetricsRouteImport } from './routes/judge-metrics'
 import { Route as JudgeDemoRouteImport } from './routes/judge-demo'
 import { Route as HospitalRouteImport } from './routes/hospital'
 import { Route as DevopsRouteImport } from './routes/devops'
@@ -84,6 +85,11 @@ const PricingRoute = PricingRouteImport.update({
 const JudgeModeRoute = JudgeModeRouteImport.update({
   id: '/judge-mode',
   path: '/judge-mode',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JudgeMetricsRoute = JudgeMetricsRouteImport.update({
+  id: '/judge-metrics',
+  path: '/judge-metrics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JudgeDemoRoute = JudgeDemoRouteImport.update({
@@ -393,6 +399,7 @@ export interface FileRoutesByFullPath {
   '/devops': typeof DevopsRoute
   '/hospital': typeof HospitalRouteWithChildren
   '/judge-demo': typeof JudgeDemoRoute
+  '/judge-metrics': typeof JudgeMetricsRoute
   '/judge-mode': typeof JudgeModeRoute
   '/pricing': typeof PricingRoute
   '/security': typeof SecurityRoute
@@ -454,6 +461,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/devops': typeof DevopsRoute
   '/judge-demo': typeof JudgeDemoRoute
+  '/judge-metrics': typeof JudgeMetricsRoute
   '/judge-mode': typeof JudgeModeRoute
   '/pricing': typeof PricingRoute
   '/security': typeof SecurityRoute
@@ -518,6 +526,7 @@ export interface FileRoutesById {
   '/devops': typeof DevopsRoute
   '/hospital': typeof HospitalRouteWithChildren
   '/judge-demo': typeof JudgeDemoRoute
+  '/judge-metrics': typeof JudgeMetricsRoute
   '/judge-mode': typeof JudgeModeRoute
   '/pricing': typeof PricingRoute
   '/security': typeof SecurityRoute
@@ -583,6 +592,7 @@ export interface FileRouteTypes {
     | '/devops'
     | '/hospital'
     | '/judge-demo'
+    | '/judge-metrics'
     | '/judge-mode'
     | '/pricing'
     | '/security'
@@ -644,6 +654,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/devops'
     | '/judge-demo'
+    | '/judge-metrics'
     | '/judge-mode'
     | '/pricing'
     | '/security'
@@ -707,6 +718,7 @@ export interface FileRouteTypes {
     | '/devops'
     | '/hospital'
     | '/judge-demo'
+    | '/judge-metrics'
     | '/judge-mode'
     | '/pricing'
     | '/security'
@@ -771,6 +783,7 @@ export interface RootRouteChildren {
   DevopsRoute: typeof DevopsRoute
   HospitalRoute: typeof HospitalRouteWithChildren
   JudgeDemoRoute: typeof JudgeDemoRoute
+  JudgeMetricsRoute: typeof JudgeMetricsRoute
   JudgeModeRoute: typeof JudgeModeRoute
   PricingRoute: typeof PricingRoute
   SecurityRoute: typeof SecurityRoute
@@ -797,6 +810,13 @@ declare module '@tanstack/react-router' {
       path: '/judge-mode'
       fullPath: '/judge-mode'
       preLoaderRoute: typeof JudgeModeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/judge-metrics': {
+      id: '/judge-metrics'
+      path: '/judge-metrics'
+      fullPath: '/judge-metrics'
+      preLoaderRoute: typeof JudgeMetricsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/judge-demo': {
@@ -1335,6 +1355,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevopsRoute: DevopsRoute,
   HospitalRoute: HospitalRouteWithChildren,
   JudgeDemoRoute: JudgeDemoRoute,
+  JudgeMetricsRoute: JudgeMetricsRoute,
   JudgeModeRoute: JudgeModeRoute,
   PricingRoute: PricingRoute,
   SecurityRoute: SecurityRoute,

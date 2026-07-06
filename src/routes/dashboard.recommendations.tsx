@@ -1,9 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { GlassCard } from "@/components/layout/GlassCard";
 import { useDistrictFilter } from "@/hooks/useDistrictFilter";
 import { generateRecommendations, type Recommendation } from "@/services/recommendationEngine";
 import { DistrictSelector } from "@/components/dashboard/DistrictSelector";
-import { Lightbulb, AlertTriangle, ArrowRight, Shield, Users, Wrench, BedDouble, Clock, Activity } from "lucide-react";
+import { Lightbulb, AlertTriangle, ArrowRight, Shield, Users, Wrench, BedDouble, Clock, Activity, Check, X, Gauge } from "lucide-react";
+import { recordDecision, getDecisionFor, computeAcceptanceStats, subscribe, type Decision } from "@/lib/acceptanceStore";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/dashboard/recommendations")({
   component: RecommendationCenter,
@@ -12,6 +15,8 @@ export const Route = createFileRoute("/dashboard/recommendations")({
 function RecommendationCenter() {
   const { selectedDistrict, districtName } = useDistrictFilter();
   const recommendations = generateRecommendations(selectedDistrict);
+  const [stats, setStats] = useState(() => computeAcceptanceStats());
+  useEffect(() => subscribe(recs => setStats(computeAcceptanceStats(recs))), []);
 
   const critical = recommendations.filter(r => r.urgency === "critical");
   const high = recommendations.filter(r => r.urgency === "high");
@@ -30,8 +35,20 @@ function RecommendationCenter() {
             Explainable actions for {districtName} — every recommendation is traceable
           </p>
         </div>
-        <DistrictSelector />
+        <div className="flex items-center gap-2">
+          <Link
+            to="/judge-metrics"
+            className="glass rounded-md px-3 py-1.5 text-[11px] text-foreground border border-primary/30 hover:border-primary/60 flex items-center gap-1.5"
+            title="Live acceptance rate — click for full judging scorecard"
+          >
+            <Gauge className="h-3 w-3 text-primary" />
+            Acceptance: <span className="font-semibold text-primary">{stats.total === 0 ? "—" : `${stats.rate.toFixed(0)}%`}</span>
+            <span className="text-muted-foreground">({stats.accepted}/{stats.total})</span>
+          </Link>
+          <DistrictSelector />
+        </div>
       </div>
+
 
       {/* Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -102,6 +119,16 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
     medium: "border-primary/20",
     low: "border-success/20",
   };
+  const [decision, setDecision] = useState<Decision | null>(() => getDecisionFor(rec.id));
+
+  const decide = (d: Decision) => {
+    setDecision(d);
+    recordDecision({ id: rec.id, action: rec.action, category: rec.category, urgency: rec.urgency, decision: d });
+    toast[d === "accepted" ? "success" : "message"](
+      `${d === "accepted" ? "Accepted" : "Rejected"}: ${rec.action}`,
+      { description: "Logged to acceptance tracker" }
+    );
+  };
 
   return (
     <GlassCard className={`p-4 border ${urgencyStyles[rec.urgency]}`}>
@@ -132,7 +159,7 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
                 <ArrowRight className="h-3 w-3 text-primary" /> {rec.expectedImpact}
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
               <span className="text-[10px] text-muted-foreground">
                 <Shield className="h-3 w-3 inline mr-0.5" />
                 Confidence: {rec.confidence}%
@@ -143,10 +170,35 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
             </div>
           </div>
         </div>
+        <div className="flex flex-col gap-1.5 shrink-0">
+          <button
+            onClick={() => decide("accepted")}
+            className={`text-[10px] px-2 py-1 rounded border flex items-center gap-1 transition ${
+              decision === "accepted"
+                ? "bg-success/20 border-success/50 text-success"
+                : "border-border/50 text-muted-foreground hover:text-success hover:border-success/40"
+            }`}
+            aria-pressed={decision === "accepted"}
+          >
+            <Check className="h-3 w-3" /> Accept
+          </button>
+          <button
+            onClick={() => decide("rejected")}
+            className={`text-[10px] px-2 py-1 rounded border flex items-center gap-1 transition ${
+              decision === "rejected"
+                ? "bg-destructive/20 border-destructive/50 text-destructive"
+                : "border-border/50 text-muted-foreground hover:text-destructive hover:border-destructive/40"
+            }`}
+            aria-pressed={decision === "rejected"}
+          >
+            <X className="h-3 w-3" /> Reject
+          </button>
+        </div>
       </div>
     </GlassCard>
   );
 }
+
 
 function UrgencyCard({ label, count, color }: { label: string; count: number; color: string }) {
   const colorClass = color === "destructive" ? "text-destructive" : color === "warning" ? "text-warning" : color === "success" ? "text-success" : "text-primary";

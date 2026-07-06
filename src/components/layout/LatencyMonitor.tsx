@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Activity } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { pushLatencySample } from "@/lib/latencySamples";
 
 /**
  * Latency Monitor — measures real ms between a data tick and the next browser paint.
@@ -32,6 +34,7 @@ export function LatencyMonitor() {
           arr.push(ms);
           if (arr.length > 20) arr.shift();
           setAvg(arr.reduce((a, b) => a + b, 0) / arr.length);
+          pushLatencySample(ms);
         });
       });
     };
@@ -54,9 +57,10 @@ export function LatencyMonitor() {
     : "text-destructive border-destructive/40 bg-destructive/10";
 
   return (
-    <div
-      className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md border text-[10px] font-mono tabular-nums transition ${tone}`}
-      title={`Tick→Paint latency. Avg(20): ${avg ? avg.toFixed(1) : "—"} ms. Target: <2000 ms. ${passes ? "PASS" : "FAIL"}`}
+    <Link
+      to="/judge-metrics"
+      className={`hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md border text-[10px] font-mono tabular-nums transition hover:brightness-125 ${tone}`}
+      title={`Tick→Paint latency. Avg(20): ${avg ? avg.toFixed(1) : "—"} ms. Target: <2000 ms. ${passes ? "PASS" : "FAIL"} — click for full scorecard`}
     >
       <span className="relative flex h-1.5 w-1.5">
         <span className={`absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping ${
@@ -67,6 +71,6 @@ export function LatencyMonitor() {
       <Activity className="h-3 w-3" />
       <span className="font-semibold">{value.toFixed(1)} ms</span>
       <span className="opacity-60">/ &lt;2s</span>
-    </div>
+    </Link>
   );
 }
