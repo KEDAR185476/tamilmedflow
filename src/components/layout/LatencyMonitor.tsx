@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Activity } from "lucide-react";
+import { pushLatencySample } from "@/lib/latencySamples";
 
 /**
  * Latency Monitor — measures real ms between a data tick and the next browser paint.
@@ -32,6 +33,7 @@ export function LatencyMonitor() {
           arr.push(ms);
           if (arr.length > 20) arr.shift();
           setAvg(arr.reduce((a, b) => a + b, 0) / arr.length);
+          pushLatencySample(ms);
         });
       });
     };
